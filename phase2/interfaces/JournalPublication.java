@@ -1,4 +1,7 @@
-
+/*
+ * This class represents the Journal publications.
+ * 
+ */
 public class JournalPublication extends Publication{
 	
 	private Journal journal;

@@ -1,4 +1,8 @@
 
+/*
+ * This class represents the Journal data structure with 
+ * the following properties
+ */
 public class Journal {
 
 	private String name;

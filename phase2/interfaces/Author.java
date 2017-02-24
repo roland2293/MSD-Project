@@ -1,12 +1,10 @@
 
 /**
- * 
- * 
- * @author paurav
+ * This class represents an Author with the following properties.
  *
  */
 public class Author {
-	
+
 	private String Name;
 	private int yearsOfExperience;
 	private String Nationality;

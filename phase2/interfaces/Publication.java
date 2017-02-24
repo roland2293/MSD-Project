@@ -1,5 +1,8 @@
 import java.util.List;
 
+/*
+ * This class represents the Publication data structure.
+ */
 public class Publication {
 
 	private String title;

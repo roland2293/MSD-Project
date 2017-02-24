@@ -1,4 +1,7 @@
-
+/*
+ * This class represents the publications for conference, 
+ * also it extends Publication.
+ */
 public class ConferencePublication extends Publication {
 
 	private Conference conference;

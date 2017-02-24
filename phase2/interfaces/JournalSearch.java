@@ -1,4 +1,7 @@
-
+/*
+ * This class represents the search for authors
+ *  who published in a particular journal
+ */
 public class JournalSearch extends SearchParameters {
 
 	private String Name;

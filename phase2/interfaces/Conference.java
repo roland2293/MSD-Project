@@ -1,4 +1,7 @@
-
+/*
+ * This class represents a conference with name and 
+ * acronym 
+ */
 public class Conference {
 
 	private String name;

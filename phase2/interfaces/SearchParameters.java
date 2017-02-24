@@ -1,5 +1,9 @@
 import java.util.List;
 
+/*
+ * This class represents the search parameters
+ *  collected from the UI
+ */
 public class SearchParameters {
 	private List<String> keywords;
 	private List<String> authorNames;

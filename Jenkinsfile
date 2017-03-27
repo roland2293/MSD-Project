@@ -1,8 +1,8 @@
 node {
    // Mark the code checkout 'stage'....
-   stage 'Checkout'
+   //stage 'Checkout'
    
-   git url: 'https://github.ccs.neu.edu/CS5500-Spring2017/team15.git'
+   //git url: 'https://github.ccs.neu.edu/CS5500-Spring2017/team15.git'
 
    // Get the maven tool.
    // ** NOTE: This 'M3' maven tool must be configured

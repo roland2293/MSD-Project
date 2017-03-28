@@ -1,19 +1,21 @@
-node {
-   // Mark the code checkout 'stage'....
-   //stage 'Checkout'
-   
-   //git url: 'https://github.ccs.neu.edu/CS5500-Spring2017/team15.git'
+pipeline {
+    agent any
 
-   // Get the maven tool.
-   // ** NOTE: This 'M3' maven tool must be configured
-   // **       in the global configuration.           
-   //def mvnHome = tool 'M3'
-
-   // Mark the code build 'stage'....
-   stage 'Build'
-
-   cd DBLP
-   // Run the maven build
-   sh "mvn -Dmaven.test.failure.ignore clean package"
-   
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
 }

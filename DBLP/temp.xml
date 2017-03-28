@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE dblp SYSTEM "dblp.dtd">
+<dblp>
+
+	<article mdate="2014-08-05" key="journals/ndjfl/Simons89">
+		<author>Peter Simons</author>
+		<title>Combinators and Categorial Grammar.</title>
+		<pages>241-261</pages>
+		<year>1989</year>
+		<volume>30</volume>
+		<journal>Notre Dame Journal of Formal Logic</journal>
+		<number>2</number>
+		<url>db/journals/ndjfl/ndjfl30.html#Simons89</url>
+		<ee>http://dx.doi.org/10.1305/ndjfl/1093635081</ee>
+	</article>
+
+	<article mdate="2007-01-23" key="journals/jbi/ZhouTCCLLHF06">
+		<author>Li Zhou</author>
+		<author>Ying Tao</author>
+		<author>James J. Cimino</author>
+		<author>Elizabeth S. Chen</author>
+		<author>Hongfang Liu</author>
+		<author>Yves A. Lussier</author>
+		<author>George Hripcsak</author>
+		<author>Carol Friedman</author>
+		<title>Terminology model discovery using natural language processing and visualization techniques.</title>
+		<pages>626-636</pages>
+		<year>2006</year>
+		<booktitle>Journal of Biomedical Informatics</booktitle>
+		<ee>http://dx.doi.org/10.1016/j.jbi.2005.10.006</ee>
+		<url>db/journals/jbi/jbi39.html#ZhouTCCLLHF06</url>
+	</article>
+
+
+	<inproceedings mdate="2013-11-04" key="conf/icccn/Wolf06">
+		<author>Tilman Wolf</author>
+		<title>Service-Centric End-to-End Abstractions in Next-Generation
+			Networks.</title>
+		<pages>79-86</pages>
+		<year>2006</year>
+		<booktitle>ICCCN</booktitle>
+		<ee>http://dx.doi.org/10.1109/ICCCN.2006.286249</ee>
+		<crossref>conf/icccn/2006</crossref>
+		<url>db/conf/icccn/icccn2006.html#Wolf06</url>
+	</inproceedings>
+	<inproceedings mdate="2016-03-23" key="conf/icccn/PanchenkoWPA09">
+		<author>Andriy Panchenko</author>
+		<author>Benedikt Westermann</author>
+		<author>Lexi Pimenidis</author>
+		<author>Christer Andersson</author>
+		<title>SHALON: Lightweight Anonymization Based on Open Standards.
+		</title>
+		<pages>1-7</pages>
+		<year>2009</year>
+		<booktitle>ICCCN</booktitle>
+		<ee>http://dx.doi.org/10.1109/ICCCN.2009.5235258</ee>
+		<ee>http://doi.ieeecomputersociety.org/10.1109/ICCCN.2009.5235258</ee>
+		<crossref>conf/icccn/2009</crossref>
+		<url>db/conf/icccn/icccn2009.html#PanchenkoWPA09</url>
+	</inproceedings>
+
+	<proceedings mdate="2012-05-07" key="conf/icccn/2011">
+		<editor>Haohong Wang</editor>
+		<editor>Jin Li</editor>
+		<editor>George N. Rouskas</editor>
+		<editor>Xiaobo Zhou</editor>
+		<title>Proceedings of 20th International Conference on Computer
+			Communications and Networks, ICCCN 2011, Maui, Hawaii, July 31 -
+			August 4, 2011</title>
+		<booktitle>ICCCN</booktitle>
+		<publisher>IEEE</publisher>
+		<year>2011</year>
+		<isbn>978-1-4577-0637-0</isbn>
+		<ee>http://ieeexplore.ieee.org/xpl/mostRecentIssue.jsp?punumber=6005186</ee>
+		<url>db/conf/icccn/icccn2011.html</url>
+	</proceedings>
+</dblp>

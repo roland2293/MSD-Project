@@ -2,7 +2,6 @@
 
 package Team15.DBLP.xml;
 
-
 import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,22 +17,48 @@ import Team15.DBLP.db.DBConnection;
  * @author paurav
  *
  */
-public class Parser{
+public class Parser {
 	private Connection conn;
 	private int curElement = -1;
 	private int ancestor = -1;
 	private Paper paper;
 	private Conference conf;
+
+	public Paper getPaper() {
+		return paper;
+	}
+
+	public void setPaper(Paper paper) {
+		this.paper = paper;
+	}
+
+	public Conference getConf() {
+		return conf;
+	}
+
+	public void setConf(Conference conf) {
+		this.conf = conf;
+	}
+
+	public Journal getJournal() {
+		return journal;
+	}
+
+	public void setJournal(Journal journal) {
+		this.journal = journal;
+	}
+
 	private Journal journal;
 	int line = 0;
-	PreparedStatement stmt_inproc, stmt_conf, stmt_author, stmt_cite,stmt_injournal;
+	PreparedStatement stmt_inproc, stmt_conf, stmt_author, stmt_cite,
+			stmt_injournal;
 	int errors = 0;
 	StringBuffer author;
-	
+
 	private class ConfigHandler extends DefaultHandler {
 		public void startElement(String namespaceURI, String localName,
 				String rawName, Attributes atts) throws SAXException {
-			if (rawName.equals("inproceedings") ) {
+			if (rawName.equals("inproceedings")) {
 				ancestor = Element.INPROCEEDING;
 				curElement = Paper.INPROCEEDING;
 				paper = new Paper();
@@ -43,14 +68,14 @@ public class Parser{
 				curElement = Conference.PROCEEDING;
 				conf = new Conference();
 				conf.key = atts.getValue("key");
-			}
-			else if (rawName.equals("article")) {
-					ancestor = Element.ARTICLE;
-					curElement = Journal.ARTICLE;
-					journal = new Journal();
-					journal.key = atts.getValue("key");
-				}
-			else if (rawName.equals("author") && (ancestor == Element.INPROCEEDING || ancestor == Element.ARTICLE)) {
+			} else if (rawName.equals("article")) {
+				ancestor = Element.ARTICLE;
+				curElement = Journal.ARTICLE;
+				journal = new Journal();
+				journal.key = atts.getValue("key");
+			} else if (rawName.equals("author")
+					&& (ancestor == Element.INPROCEEDING
+							|| ancestor == Element.ARTICLE)) {
 				author = new StringBuffer();
 			}
 
@@ -58,10 +83,9 @@ public class Parser{
 				curElement = Paper.getElement(rawName);
 			} else if (ancestor == Element.PROCEEDING) {
 				curElement = Conference.getElement(rawName);
-			}else if (ancestor == Element.ARTICLE) {
+			} else if (ancestor == Element.ARTICLE) {
 				curElement = Journal.getElement(rawName);
-			}
-			else if (ancestor == -1) {
+			} else if (ancestor == -1) {
 				ancestor = Element.OTHER;
 				curElement = Element.OTHER;
 			} else {
@@ -86,7 +110,7 @@ public class Parser{
 				} else if (curElement == Paper.YEAR) {
 					paper.year = Integer.parseInt(str);
 				}
-			} else if(ancestor == Element.ARTICLE) {
+			} else if (ancestor == Element.ARTICLE) {
 				String str = new String(ch, start, length).trim();
 				if (curElement == Journal.AUTHOR) {
 					author.append(str);
@@ -98,12 +122,10 @@ public class Parser{
 					journal.title += str;
 				} else if (curElement == Journal.YEAR) {
 					journal.year = Integer.parseInt(str);
-				}
-				else if (curElement == Journal.VOLUME) {
+				} else if (curElement == Journal.VOLUME) {
 					journal.volume += str;
 				}
-			}			
-			else if (ancestor == Element.PROCEEDING) {
+			} else if (ancestor == Element.PROCEEDING) {
 				String str = new String(ch, start, length).trim();
 				if (curElement == Conference.CONFNAME) {
 					conf.name = str;
@@ -121,7 +143,7 @@ public class Parser{
 			if (rawName.equals("author") && ancestor == Element.ARTICLE) {
 				journal.authors.add(author.toString().trim());
 			}
-			
+
 			if (Element.getElement(rawName) == Element.INPROCEEDING) {
 				ancestor = -1;
 				try {
@@ -137,12 +159,12 @@ public class Parser{
 					stmt_inproc.setString(4, paper.key);
 					stmt_inproc.addBatch();
 
-					for (String author: paper.authors) {
-						stmt_author.setString(1, author); 
+					for (String author : paper.authors) {
+						stmt_author.setString(1, author);
 						stmt_author.setString(2, paper.key);
 						stmt_author.addBatch();
 					}
-					for (String cited: paper.citations) {
+					for (String cited : paper.citations) {
 						if (!cited.equals("...")) {
 							stmt_cite.setString(1, paper.key);
 							stmt_cite.setString(2, cited);
@@ -154,8 +176,7 @@ public class Parser{
 					System.out.println("line:" + line);
 					System.exit(0);
 				}
-			}
-			else if (Element.getElement(rawName) == Element.ARTICLE) {
+			} else if (Element.getElement(rawName) == Element.ARTICLE) {
 				ancestor = -1;
 				try {
 					if (journal.title.equals("") || journal.journal.equals("")
@@ -171,12 +192,12 @@ public class Parser{
 					stmt_injournal.setString(5, journal.volume);
 					stmt_injournal.addBatch();
 
-					for (String author: journal.authors) {
-						stmt_author.setString(1, author); 
+					for (String author : journal.authors) {
+						stmt_author.setString(1, author);
 						stmt_author.setString(2, journal.key);
 						stmt_author.addBatch();
 					}
-					for (String cited: journal.citations) {
+					for (String cited : journal.citations) {
 						if (!cited.equals("...")) {
 							stmt_cite.setString(1, journal.key);
 							stmt_cite.setString(2, cited);
@@ -188,8 +209,7 @@ public class Parser{
 					System.out.println("line:" + line);
 					System.exit(0);
 				}
-			}
-			else if (Element.getElement(rawName) == Element.PROCEEDING) {
+			} else if (Element.getElement(rawName) == Element.PROCEEDING) {
 				ancestor = -1;
 				try {
 					if (conf.name.equals(""))
@@ -241,68 +261,72 @@ public class Parser{
 			throw new SAXException("Error encountered");
 		}
 
-		public void fatalError(SAXParseException exception) throws SAXException {
+		public void fatalError(SAXParseException exception)
+				throws SAXException {
 			Message("**Parsing Fatal Error**\n", exception);
 			throw new SAXException("Fatal Error encountered");
 		}
 	}
 
-	Parser(String uri) throws SQLException {
+	public Parser(String uri, Boolean test) throws SQLException {
 		try {
 			System.out.println("Parsing...");
 			conn = DBConnection.getConn();
 			conn.setAutoCommit(false);
-			stmt_inproc = conn
-					.prepareStatement("insert into paper(title,year,conference,paper_key) values (?,?,?,?)");
-			stmt_injournal = conn
-					.prepareStatement("insert into article(title,year,journal,journal_key,volume) values (?,?,?,?,?)");
-			
-			stmt_author = conn
-					.prepareStatement("insert into author(name,paper_key) values (?,?)");
+			stmt_inproc = conn.prepareStatement(
+					"insert into paper(title,year,conference,paper_key) values (?,?,?,?)");
+			stmt_injournal = conn.prepareStatement(
+					"insert into article(title,year,journal,journal_key,volume) values (?,?,?,?,?)");
 
-			stmt_cite = conn
-					.prepareStatement("insert into citation(paper_cite_key,paper_cited_key) values (?,?)");
+			stmt_author = conn.prepareStatement(
+					"insert into author(name,paper_key) values (?,?)");
 
-			stmt_conf = conn
-					.prepareStatement("insert into conference(conf_key,name,detail) values (?,?,?)");
+			stmt_cite = conn.prepareStatement(
+					"insert into citation(paper_cite_key,paper_cited_key) values (?,?)");
+
+			stmt_conf = conn.prepareStatement(
+					"insert into conference(conf_key,name,detail) values (?,?,?)");
 
 			SAXParserFactory parserFactory = SAXParserFactory.newInstance();
 			SAXParser parser = parserFactory.newSAXParser();
 			ConfigHandler handler = new ConfigHandler();
-			parser.getXMLReader().setFeature(
-					"http://xml.org/sax/features/validation", true);
+			parser.getXMLReader()
+					.setFeature("http://xml.org/sax/features/validation", true);
 			parser.parse(new File(uri), handler);
-			
-			try {
-				stmt_inproc.executeBatch();
-				stmt_conf.executeBatch();
-				stmt_author.executeBatch();
-				stmt_cite.executeBatch();
-				conn.commit();
-				System.out.println("Processed " + line);
-			} catch (SQLException e) {
-				e.printStackTrace();
+			if (!test) {
+				try {
+					stmt_inproc.executeBatch();
+					stmt_conf.executeBatch();
+					stmt_author.executeBatch();
+					stmt_cite.executeBatch();
+					stmt_injournal.executeBatch();
+					conn.commit();
+					System.out.println("Processed " + line);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
-			conn.close();
 			System.out.println("num of errors: " + errors);
+			conn.close();
 		} catch (IOException e) {
 			System.out.println("Error reading URI: " + e.getMessage());
 		} catch (SAXException e) {
 			System.out.println("Error in parsing: " + e.getMessage());
 		} catch (ParserConfigurationException e) {
-			System.out.println("Error in XML parser configuration: "
-					+ e.getMessage());
+			System.out.println(
+					"Error in XML parser configuration: " + e.getMessage());
 		}
 	}
 
-	public static void main(String[] args) throws SQLException,
-			ClassNotFoundException, IOException {
+	public static void main(String[] args)
+			throws SQLException, ClassNotFoundException, IOException {
 		Long start = System.currentTimeMillis();
-//		Parser p = new Parser(args[0]);
+		Parser p = new Parser(args[0], false);
 		CommitteesParser committeesParser = new CommitteesParser();
 		committeesParser.setFolder(args[1]);
 		committeesParser.parser();
 		Long end = System.currentTimeMillis();
 		System.out.println("Used: " + (end - start) / 1000 + " seconds");
+		
 	}
 }

@@ -14,6 +14,12 @@ public class Conference {
 	public static final int CONFNAME = 2;
 	public static final int CONFDETAIL = 3;
 
+	@Override
+	public String toString() {
+		return "Conference [key=" + key + ", name=" + name
+				+ ", detail=" + detail + "]";
+	}
+
 	public static int getElement(String name) {
 		if (name.equals("proceedings")) {
 			return PROCEEDING;

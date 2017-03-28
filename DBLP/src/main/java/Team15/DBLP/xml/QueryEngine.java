@@ -132,7 +132,7 @@ public class QueryEngine {
 	 * @throws SQLException 
 	 */
 	List<String> parseResults(ResultSet resultSet) throws SQLException{
-		List<String> authorList = new ArrayList<>();
+		List<String> authorList = new ArrayList<String>();
 		while(resultSet.next()){
             String authorName = resultSet.getString("name");
             System.out.println("Result Set"+authorName);

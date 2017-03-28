@@ -12,7 +12,7 @@ class test{
 	public static void main(String args[]){
 		QueryEngine q = new QueryEngine();
 		SearchParameters sp = new SearchParameters();
-		ArrayList<String> lis = new ArrayList<>();
+		ArrayList<String> lis = new ArrayList<String>();
 		lis.add("Map Reduce");
 		lis.add("Machine Learning");
 		

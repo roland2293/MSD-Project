@@ -23,15 +23,18 @@ public class Paper {
 	public static final int CONFERENCE = 6;
 
 	public String toString(){
-		return "title: " + title + " authors: " + authors.toString() +
+		return "title: " + title + " authors: " + authors.toString() + " citations: " + citations.toString()+
 				" conference: " + conference + " year: " + year + " key: " + key;
 	}
+
 	public static int getElement(String name) {
 		if (name.equals("inproceedings")) {
 			return INPROCEEDING;
 		} else if (name.equals("author")) {
 			return AUTHOR;
-		} else if (name.equals("title") || name.equals("sub") || name.equals("sup") || name.equals("i")||name.equals("tt")) {
+		} else if (name.equals("title") || name.equals("sub")
+				|| name.equals("sup") || name.equals("i")
+				|| name.equals("tt")) {
 			return TITLE;
 		} else if (name.equals("year")) {
 			return YEAR;

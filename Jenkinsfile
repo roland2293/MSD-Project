@@ -4,18 +4,17 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'cd DBLP'
-                sh 'mvn compile'
+                sh 'mvn -f DBLP/pom.xml compile'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
+                sh 'mvn -f DBLP/pom.xml test'
             }
         }
         stage('Deploy') {
             steps {
-                sh 'mvn package'
+                sh 'mvn -f DBLP/pom.xml package'
 		        archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
             }
         }

@@ -1,4 +1,4 @@
-package src.xml;
+package Team15.DBLP.xml;
 
 import java.net.ConnectException;
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import src.db.DBConnection;
+import Team15.DBLP.db.DBConnection;
 
 public class QueryEngine {
 	

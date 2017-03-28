@@ -1,4 +1,4 @@
-package src.xml;
+package Team15.DBLP.xml;
 
 
 import java.sql.SQLException;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import src.db.DBConnection;
+import Team15.DBLP.db.DBConnection;
 
 class test{
 	public static void main(String args[]){

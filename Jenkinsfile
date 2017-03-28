@@ -15,7 +15,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh 'mvn -f DBLP/pom.xml package'
-                archiveArtifacts artifacts: '**/target/*.jar,**/target/site/**.*', fingerprint: true
+                archiveArtifacts artifacts: '**/target/*.jar, **/target/site/*', fingerprint: true
             }
         }
     }

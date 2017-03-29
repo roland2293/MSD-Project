@@ -16,8 +16,10 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'mvn -f DBLP/pom.xml package'
-                archiveArtifacts artifacts: '**/target/*.jar, **/target/site/**/**.*', fingerprint: true
+                wrap([$class: 'Xvnc', useXauthority: true]) {
+                    sh 'mvn -f DBLP/pom.xml package'
+                    archiveArtifacts artifacts: '**/target/*.jar, **/target/site/**/**.*', fingerprint: true
+                }
             }
         }
     }

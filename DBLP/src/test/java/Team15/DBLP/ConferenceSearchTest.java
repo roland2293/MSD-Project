@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 import org.junit.Test;
 
 import Team15.DBLP.ui.ConferenceSearch;
-import Team15.DBLP.xml.SearchParameters;
+import Team15.DBLP.QueryEngine.SearchParameters;
 
 public class ConferenceSearchTest {
 	

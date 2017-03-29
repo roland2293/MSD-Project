@@ -53,6 +53,7 @@ public class QueryEngine {
 				for(String strr : searchParameters.getKeywords())	{
 					if (first){
 						query.append("  a.title like ? ");
+						++paramCount;
 						first = false;
 						continue;
 					}
@@ -60,7 +61,10 @@ public class QueryEngine {
 					query.append("or  a.title like ? ");
 					++paramCount;
 				}
+				
+				if(searchParameters.getYearOfPublication()>0){
 				query.append(")");
+				}
 			}
 
 			if(searchParameters.getConferenceNames() != null && searchParameters.getConferenceNames().size()>0 && confType.equals("conference")){

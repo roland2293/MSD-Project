@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import Team15.DBLP.db.DBConnection;
 
@@ -18,6 +19,16 @@ public class CommitteesParser {
 	private File folder;
 	private Connection conn;
 	private PreparedStatement insertCommitteeMembers;
+	public ArrayList<Committee> committees;
+	
+	public ArrayList<Committee> getCommittees() {
+		return committees;
+	}
+
+	public void setCommittees(ArrayList<Committee> committees) {
+		this.committees = committees;
+	}
+
 	BufferedReader reader;
 	
 	public void parser() throws SQLException, IOException{
@@ -30,7 +41,7 @@ public class CommitteesParser {
 	}
 	
 	public void parseFile(File file) throws IOException, SQLException{
-		
+		committees = new ArrayList<Committee>();
 		String name = file.getName();
 		String[] split = name.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
 		String conferenceName = split[0];
@@ -39,6 +50,7 @@ public class CommitteesParser {
 		Committee committee = new Committee(conferenceName, conferenceYear);
 		for (String line; (line = reader.readLine()) != null;) {
 			committee = parseLine(line, committee);
+			committees.add(committee);
 			insertCommitteeMembers.setString(1, committee.getAuthorName());
 			insertCommitteeMembers.setString(2, committee.getConference());
 			insertCommitteeMembers.setString(3, committee.getYear());
@@ -50,6 +62,7 @@ public class CommitteesParser {
 	}
 	
 	public Committee parseLine(String line, Committee committee){
+		committee = new Committee(committee.getConference(), committee.getYear());
 		if(line.contains("G:")){
 			committee.setRole("General Chair");
 			committee.setAuthorName(line.split(":")[1]);

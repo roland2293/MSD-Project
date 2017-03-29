@@ -1,4 +1,4 @@
-package Team15.DBLP.xml;
+package Team15.DBLP.QueryEngine;
 
 import java.net.ConnectException;
 import java.sql.Connection;
@@ -12,7 +12,7 @@ import java.util.List;
 import Team15.DBLP.db.DBConnection;
 
 public class QueryEngine {
-	
+
 	PreparedStatement pStmt;
 	Connection conn;
 	private int paramCount=0;
@@ -28,23 +28,26 @@ public class QueryEngine {
 		String str=null;
 		this.searchParameters = searchParameters;
 		String confType=null;
-		
+		String key=null;
+
 		if(searchParameters != null){		
 			if(searchParameters.getSearchType().equalsIgnoreCase("conference")){
-				query = new StringBuilder("select a.name from AuthorPaper as a where");	
+				query = new StringBuilder("select distinct a.name from AuthorPaper as a where");	
 				confType ="conference";
+				key = "paper_key";
 			}else{
-				query = new StringBuilder("select a.name from AuthorArticle as a where");
+				query = new StringBuilder("select distinct a.name from AuthorArticle as a where");
 				confType ="journal";
+				key = "journal_key";
 			}	
 			if(searchParameters.getYearOfPublication()>0){
 				query.append(" a.year = ? ");
 				++paramCount;
 			}
-			
+
 			if(searchParameters.getKeywords() != null && searchParameters.getKeywords().size()>0){
 				if(searchParameters.getYearOfPublication()>0){
-				query.append(" and( ");
+					query.append(" and( ");
 				}
 				boolean first = true;
 				for(String strr : searchParameters.getKeywords())	{
@@ -53,33 +56,58 @@ public class QueryEngine {
 						first = false;
 						continue;
 					}
-					
+
 					query.append("or  a.title like ? ");
-				    ++paramCount;
+					++paramCount;
 				}
 				query.append(")");
 			}
-			
-			if(searchParameters.getConferenceNames() != null && searchParameters.getConferenceNames().size()>0){
+
+			if(searchParameters.getConferenceNames() != null && searchParameters.getConferenceNames().size()>0 && confType.equals("conference")){
 				query.append(" and( ");
 				boolean first = true;
 				for(String strr : searchParameters.getConferenceNames())	{
 					if (first){
-						query.append(confType +" like ? ");
+						query.append("a."+confType +" like ? ");
+						++paramCount;
+						query.append("or  a."+key+" like ? ");
+						++paramCount;
 						first = false;
 						continue;
 					}
-					query.append("or  "+confType+" like ? ");
-				    ++paramCount;
+					query.append("or  a."+confType+" like ? ");
+					++paramCount;
+					query.append("or  a."+key+" like ? ");
+					++paramCount;
+				}
+				query.append(")");
+			}
+
+			if(searchParameters.getJournalNames() != null && searchParameters.getJournalNames().size()>0 && confType.equals("journal") ){
+				query.append(" and( ");
+				boolean first = true;
+				for(String strr : searchParameters.getJournalNames())	{
+					if (first){
+						query.append("a."+confType +" like ? ");
+						++paramCount;
+						query.append("or  a."+key+" like ? ");
+						++paramCount;
+						first = false;
+						continue;
+					}
+					query.append("or  a."+confType+" like ? ");
+					++paramCount;
+					query.append("or  a."+key+" like ? ");
+					++paramCount;
 				}
 				query.append(")");
 			}
 			str= query.toString();
-			
+
 		}
 		return str;
 	}
-	
+
 	/**
 	 * Execute the given sql query and return the result set for the same.
 	 * @param query
@@ -90,36 +118,40 @@ public class QueryEngine {
 		int curr = 1;
 		try {
 			pStmt = conn.prepareStatement(query);
-		    while(curr <= paramCount){
-		    	if(searchParameters.getYearOfPublication()>0){
-		    		pStmt.setInt(curr,searchParameters.getYearOfPublication());
-		            ++curr;
-		    	}
-		    	if(searchParameters.getKeywords() != null){
-			    	for(String strr : searchParameters.getKeywords()){
-			            pStmt.setString(curr, "%"+strr+"%");
-			            ++curr;
-			        }
-		    	}
-		    	if(searchParameters.getSearchType().equalsIgnoreCase("conference")){
-			    	if(searchParameters.getConferenceNames() != null){
-				    	for(String strr : searchParameters.getConferenceNames()){
-				            pStmt.setString(curr, "%/"+strr+"/%");
-				            ++curr;
-				        }
-			    	}
-		    	}
-		    	else{
-			    	if(searchParameters.getJournalNames() != null){
-				    	for(String strr : searchParameters.getConferenceNames()){
-				            pStmt.setString(curr, "%/"+strr+"/%");
-				            ++curr;
-				        }
-			    	}
-		    		
-		    	}
-		    }
+			while(curr <= paramCount){
+				if(searchParameters.getYearOfPublication()>0){
+					pStmt.setInt(curr,searchParameters.getYearOfPublication());
+					++curr;
+				}
+				if(searchParameters.getKeywords() != null){
+					for(String strr : searchParameters.getKeywords()){
+						pStmt.setString(curr, "%"+strr+"%");
+						++curr;
+					}
+				}
+				if(searchParameters.getSearchType().equalsIgnoreCase("conference")){
+					if(searchParameters.getConferenceNames() != null){
+						for(String strr : searchParameters.getConferenceNames()){
+							pStmt.setString(curr, "%"+strr+"%");
+							++curr;
+							pStmt.setString(curr, "%"+strr+"%");
+							++curr;
+						}
+					}
+				}
+				else{
+					if(searchParameters.getJournalNames() != null){
+						for(String strr : searchParameters.getJournalNames()){
+							pStmt.setString(curr, "%"+strr+"%");
+							++curr;
+							pStmt.setString(curr, "%"+strr+"%");
+							++curr;
+						}
+					}
 
+				}
+			}
+			System.out.println(pStmt);
 			result = pStmt.executeQuery();			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -127,7 +159,7 @@ public class QueryEngine {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Given a result set, it will generate a list of authors
 	 * @param resultSet
@@ -137,37 +169,28 @@ public class QueryEngine {
 	List<String> parseResults(ResultSet resultSet) throws SQLException{
 		List<String> authorList = new ArrayList<String>();
 		while(resultSet.next()){
-            String authorName = resultSet.getString("name");
-            authorList.add(authorName);
-            
+			String authorName = resultSet.getString("name");
+			authorList.add(authorName); 
 		}
-		 System.out.println("Result Set Size"+authorList.size());
 		return authorList;
-		
+
 	}
-	
-	public List<String> query (SearchParameters searchparam) throws SQLException{
+
+	public List<String> query (SearchParameters searchparam){
 		conn =  DBConnection.getConn();
 		this.searchParameters = searchparam;
 		List<String> authors = null;
 		try {
 			String sqlQuery = createSQLQuery(searchParameters);
-			System.out.println(searchparam.toString());
-			System.out.println(sqlQuery);
 			ResultSet rs = executeSQLQuery(sqlQuery);
 			authors = parseResults(rs);
-			
+			conn.close();
+
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally{
-			//pStmt.close();
-			conn.close();
-		}
 		return authors;
 	}
-	
 
-		
 }

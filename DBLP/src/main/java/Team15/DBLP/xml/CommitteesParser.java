@@ -20,7 +20,7 @@ public class CommitteesParser {
 	private Connection conn;
 	private PreparedStatement insertCommitteeMembers;
 	public ArrayList<Committee> committees;
-	
+
 	public ArrayList<Committee> getCommittees() {
 		return committees;
 	}
@@ -30,17 +30,18 @@ public class CommitteesParser {
 	}
 
 	BufferedReader reader;
-	
-	public void parser() throws SQLException, IOException{
+
+	public void parser(Boolean isTest) throws SQLException, IOException {
 		conn = DBConnection.getConn();
-		insertCommitteeMembers = conn
-				.prepareStatement("insert into committee(authorname, conferenceName, year, role) values(?,?,?,?)");
-		for(File file: folder.listFiles()){
-			parseFile(file);
+		insertCommitteeMembers = conn.prepareStatement(
+				"insert into committee(authorname, conferenceName, year, role) values(?,?,?,?)");
+		for (File file : folder.listFiles()) {
+			parseFile(file, isTest);
 		}
 	}
-	
-	public void parseFile(File file) throws IOException, SQLException{
+
+	public void parseFile(File file, Boolean isTest) throws IOException,
+			SQLException {
 		committees = new ArrayList<Committee>();
 		String name = file.getName();
 		String[] split = name.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
@@ -57,33 +58,35 @@ public class CommitteesParser {
 			insertCommitteeMembers.setString(4, committee.getRole());
 			insertCommitteeMembers.addBatch();
 		}
-		insertCommitteeMembers.executeBatch();
+		if (!isTest)
+			insertCommitteeMembers.executeBatch();
 		reader.close();
 	}
-	
-	public Committee parseLine(String line, Committee committee){
-		committee = new Committee(committee.getConference(), committee.getYear());
-		if(line.contains("G:")){
+
+	public Committee parseLine(String line, Committee committee) {
+		committee = new Committee(committee.getConference(), committee
+				.getYear());
+		if (line.contains("G:")) {
 			committee.setRole("General Chair");
 			committee.setAuthorName(line.split(":")[1]);
-		}else if (line.contains("P:")) {
+		} else if (line.contains("P:")) {
 			committee.setRole("Program Chair");
 			committee.setAuthorName(line.split(":")[1]);
-		}else if (line.contains("E:")) {
+		} else if (line.contains("E:")) {
 			committee.setRole("External Review Committee");
 			committee.setAuthorName(line.split(":")[1]);
-		}else if (line.contains("C:")) {
+		} else if (line.contains("C:")) {
 			committee.setRole("Conference Chair");
 			committee.setAuthorName(line.split(":")[1]);
-		}else{
+		} else {
 			committee.setRole("Committee member");
 			committee.setAuthorName(line);
 		}
-		
+
 		return committee;
 	}
-	
-	public void setFolder(String path){
+
+	public void setFolder(String path) {
 		folder = new File(path);
 	}
 

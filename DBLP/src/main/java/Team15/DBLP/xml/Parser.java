@@ -324,7 +324,7 @@ public class Parser {
 		Parser p = new Parser(args[0], false);
 		CommitteesParser committeesParser = new CommitteesParser();
 		committeesParser.setFolder(args[1]);
-		committeesParser.parser();
+		committeesParser.parser(false);
 		Long end = System.currentTimeMillis();
 		System.out.println("Used: " + (end - start) / 1000 + " seconds");
 		

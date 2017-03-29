@@ -21,7 +21,7 @@ public class CommitteeParserTest {
 	public void setUp() throws SQLException, IOException {
 		committeesParser = new CommitteesParser();
 		committeesParser.setFolder("committees_test");
-		committeesParser.parser();
+		committeesParser.parser(true);
 		committees = committeesParser.getCommittees();
 	}
 

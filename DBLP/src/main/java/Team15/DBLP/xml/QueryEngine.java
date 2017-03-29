@@ -144,7 +144,7 @@ public class QueryEngine {
 		
 	}
 	
-	List<String> query (SearchParameters searchparam) throws SQLException{
+	public List<String> query (SearchParameters searchparam) throws SQLException{
 		conn =  DBConnection.getConn();
 		this.searchParameters = searchparam;
 		List<String> authors = null;

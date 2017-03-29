@@ -42,7 +42,9 @@ public class QueryEngine {
 			}
 			
 			if(searchParameters.getKeywords() != null && searchParameters.getKeywords().size()>0){
+				if(searchParameters.getYearOfPublication()>0){
 				query.append(" and( ");
+				}
 				boolean first = true;
 				for(String strr : searchParameters.getKeywords())	{
 					if (first){

@@ -9,7 +9,9 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'mvn -f DBLP/pom.xml test'
+            wrap([$class: 'Xvnc', useXauthority: true]) {
+                    sh 'mvn -f DBLP/pom.xml test'
+                }
             }
         }
         stage('Deploy') {

@@ -39,6 +39,7 @@ public class QueryEngine {
 			}	
 			if(searchParameters.getYearOfPublication()>0){
 				query.append(" a.year = ? ");
+				++paramCount;
 			}
 			
 			if(searchParameters.getKeywords() != null && searchParameters.getKeywords().size()>0){
@@ -137,11 +138,10 @@ public class QueryEngine {
 		List<String> authorList = new ArrayList<String>();
 		while(resultSet.next()){
             String authorName = resultSet.getString("name");
-            System.out.println("Result Set"+authorName);
             authorList.add(authorName);
             
 		}
-		
+		 System.out.println("Result Set Size"+authorList.size());
 		return authorList;
 		
 	}
@@ -152,6 +152,7 @@ public class QueryEngine {
 		List<String> authors = null;
 		try {
 			String sqlQuery = createSQLQuery(searchParameters);
+			System.out.println(searchparam.toString());
 			System.out.println(sqlQuery);
 			ResultSet rs = executeSQLQuery(sqlQuery);
 			authors = parseResults(rs);

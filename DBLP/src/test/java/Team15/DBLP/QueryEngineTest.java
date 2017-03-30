@@ -62,7 +62,7 @@ public class QueryEngineTest {
 		searchparam.setSearchType("conference");
 		searchparam.setConferenceNames(confNames);
 		
-		int expectedAuthors = 182;
+		int expectedAuthors = 181;
 		assertEquals(expectedAuthors, qengine.query(searchparam).size());
 	}
 	

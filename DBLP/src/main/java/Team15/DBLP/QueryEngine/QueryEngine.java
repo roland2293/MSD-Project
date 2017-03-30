@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -14,9 +15,11 @@ import Team15.DBLP.db.DBConnection;
 public class QueryEngine {
 
 	PreparedStatement pStmt;
+	PreparedStatement filtStmt;
 	Connection conn;
 	private int paramCount=0;
 	SearchParameters searchParameters;
+	List<String> authList=null;
 
 	/**
 	 * Given Search parameters it generates a sql query.
@@ -188,13 +191,43 @@ public class QueryEngine {
 			String sqlQuery = createSQLQuery(searchParameters);
 			ResultSet rs = executeSQLQuery(sqlQuery);
 			authors = parseResults(rs);
+			this.authList=authors;
+			filterEligibleAuth();
 			conn.close();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}				
 		return authors;
+	}
+	
+	private void filterEligibleAuth(){
+		Calendar now = Calendar.getInstance();   // Gets the current date and time
+		int year = now.get(Calendar.YEAR);       // The current year
+		ArrayList<String> authorList = new ArrayList<String>();
+		
+		String sqlQuery = "SELECT DISTINCT authorname FROM committee WHERE year IN(?,?,?)";
+		try {
+			filtStmt = conn.prepareStatement(sqlQuery);
+			filtStmt.setInt(1, year-1);
+			filtStmt.setInt(2, year-2);
+			filtStmt.setInt(3, year-3);
+			
+			// execute select SQL stetement
+			ResultSet rs = filtStmt.executeQuery();
+
+			while (rs.next()) {
+
+				String userid = rs.getString("authorname");
+				authorList.add(userid);
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		authList.removeAll(authorList);
 	}
 
 }

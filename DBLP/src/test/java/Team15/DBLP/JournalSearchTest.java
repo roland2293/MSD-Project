@@ -58,7 +58,7 @@ public class JournalSearchTest {
 		assertEquals("[natural language processing, visualization techniques]",
 				searchParameters.getKeywords().toString());
 		assertEquals("[Journal of Biomedical Informatics, jbi]",
-				searchParameters.getConferenceNames().toString());
+				searchParameters.getJournalNames().toString());
 		assertEquals(false, chckbxAssociateEditor.isEnabled());
 		assertEquals(false, chckbxEditorinChief.isEnabled());
 	}

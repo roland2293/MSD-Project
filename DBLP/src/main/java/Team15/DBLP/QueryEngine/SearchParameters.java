@@ -9,7 +9,7 @@ public class SearchParameters {
 	private List<String> keywords;
 	private List<String> authorNames;
 	private String volume;
-	private int yearOfPublication;
+	private int yearOfPublication = 0;
 	private boolean generalChair;
 	private boolean programChair;
 	private boolean conferenceChair;
@@ -31,6 +31,21 @@ public class SearchParameters {
 				+ committeeMember + ", associateEditor=" + associateEditor
 				+ ", editorinChief=" + editorinChief + ", searchType="
 				+ searchType + "]";
+	}
+	
+	
+	public boolean isEmpty(){
+		if (searchType.equals("conference") && !conferenceNames.isEmpty())
+			return false;
+		if (searchType.equals("journal") && !journalNames.isEmpty())
+			return false;
+		if (!keywords.isEmpty())
+			return false;
+		if (authorNames != null && !authorNames.isEmpty())
+			return false;
+		if(yearOfPublication != 0)
+			return false;
+		return true;
 	}
 
 	public String getVolume() {

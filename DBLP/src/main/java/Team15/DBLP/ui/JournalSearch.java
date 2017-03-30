@@ -206,9 +206,14 @@ public class JournalSearch extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// numValidator(yearTextField);
 			SearchParameters searchParameters = generateSearchParameters();
+			if (searchParameters.isEmpty()){
+				JOptionPane.showMessageDialog(null,
+						"No Search parameters specified!", "WARNING!!",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 			System.out.println(searchParameters.toString());
 			QueryEngine queryEngine = new QueryEngine();
-
 			List<String> authorNames = queryEngine.query(searchParameters);
 			AuthorResult authorFrame = new AuthorResult(authorNames, "journal");
 			frame.setVisible(false);
@@ -229,7 +234,7 @@ public class JournalSearch extends JFrame implements ActionListener {
 
 		String journalNames = journalTextfield.getText();
 		ArrayList<String> journalNamesList = new ArrayList<String>();
-		searchParameters.setConferenceNames(journalNamesList);
+		searchParameters.setJournalNames(journalNamesList);
 		if (!journalNames.isEmpty()) {
 			String[] journalNamesArray = journalNames.split(",");
 			for (int i = 0; i < journalNamesArray.length; i++) {

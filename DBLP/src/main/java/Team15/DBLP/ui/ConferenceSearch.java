@@ -203,9 +203,14 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// numValidator(yearTextField);
 			SearchParameters searchParameters = generateSearchParameters();
+			if (searchParameters.isEmpty()){
+				JOptionPane.showMessageDialog(null,
+						"No Search parameters specified!", "WARNING!!",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 			System.out.println(searchParameters.toString());
 			QueryEngine queryEngine = new QueryEngine();
-
 			List<String> authorNames = queryEngine.query(searchParameters);
 			AuthorResult authorFrame = new AuthorResult(authorNames,
 					"conference");

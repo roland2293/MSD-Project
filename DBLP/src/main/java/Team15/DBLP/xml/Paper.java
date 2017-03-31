@@ -6,6 +6,8 @@ import java.util.ArrayList;
  * @author paurav
  *
  */
+ // A Paper consists of a key, title, Year published,Confernece Name, a list of authors, and the citations in each
+ // paper.
 public class Paper {
 	public String key;
 	public String title;

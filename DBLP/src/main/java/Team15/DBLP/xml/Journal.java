@@ -6,6 +6,8 @@ import java.util.ArrayList;
  * @author paurav
  *
  */
+ // A Journal consists of a key, title, Year published, Volume Number, Journal Name, a list of authors, and the
+ // citations in each journal.
 public class Journal {
 	public String key;
 	public String title;

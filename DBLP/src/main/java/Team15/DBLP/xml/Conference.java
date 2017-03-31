@@ -4,6 +4,7 @@ package Team15.DBLP.xml;
  * @author paurav
  *
  */
+ // A conference consists of a key, name and detail.
 public class Conference {
 	public String key;
 	public String name;

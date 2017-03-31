@@ -15,6 +15,7 @@ import Team15.DBLP.db.DBConnection;
  * @author paurav
  *
  */
+ // CommitteesParser is used to get the Committee from a file and store it in the database.
 public class CommitteesParser {
 	private File folder;
 	private Connection conn;

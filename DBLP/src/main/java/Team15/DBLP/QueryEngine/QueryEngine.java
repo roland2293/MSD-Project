@@ -1,3 +1,11 @@
+/*
+ * Middleware Query Engine
+ * @author: Tariq Anwar
+ * @function: The function of the middleware is to receive Query parameters and generate query
+ *            and excute it on the database. The retrieved results are parsed and sent it back to UI 
+ * 
+ * */
+
 package Team15.DBLP.QueryEngine;
 
 import java.net.ConnectException;
@@ -20,11 +28,11 @@ public class QueryEngine {
 	private int paramCount=0;
 	SearchParameters searchParameters;
 	List<String> authList=null;
-
+ 
 	/**
-	 * Given Search parameters it generates a sql query.
+	 * Given Search parameters(Object containing queries) it parses every parameter and generates a sql query.
 	 * @param searchParameters
-	 * @return
+	 * @return Sql query string
 	 */
 	String createSQLQuery(SearchParameters searchParameters){
 		StringBuilder query=null;
@@ -118,7 +126,7 @@ public class QueryEngine {
 	/**
 	 * Execute the given sql query and return the result set for the same.
 	 * @param query
-	 * @return
+	 * @return resultset object
 	 */
 	ResultSet executeSQLQuery(String query){
 		ResultSet result=null;
@@ -168,7 +176,7 @@ public class QueryEngine {
 	}
 
 	/**
-	 * Given a result set, it will generate a list of authors
+	 * Given a result set, it will generate a list of authors by extracting name parameters
 	 * @param resultSet
 	 * @return
 	 * @throws SQLException 
@@ -183,6 +191,11 @@ public class QueryEngine {
 
 	}
 
+	/**This method is called from UI when user submits query
+	 * It creates the connection object , generates SQL statement , execute and return the result.
+	 * @param searchparam
+	 * @return List<String>
+	 */
 	public List<String> query (SearchParameters searchparam){
 		conn =  DBConnection.getConn();
 		this.searchParameters = searchparam;
@@ -202,6 +215,10 @@ public class QueryEngine {
 		return authors;
 	}
 	
+	/**this method filters the author who have already served in last 3 years commitee, 
+	 * such authors are not eligible for committee membership for current year.
+	 * 
+	 */
 	private void filterEligibleAuth(){
 		Calendar now = Calendar.getInstance();   // Gets the current date and time
 		int year = now.get(Calendar.YEAR);       // The current year

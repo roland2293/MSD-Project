@@ -1,5 +1,5 @@
-package Team15.DBLP;
-import static org.junit.Assert.assertEquals;
+package Team15.DBLP.QueryEngine;
+import static org.junit.Assert.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.mysql.jdbc.AssertionFailedException;
 
 import Team15.DBLP.QueryEngine.QueryEngine;
 import Team15.DBLP.QueryEngine.SearchParameters;
@@ -21,7 +23,7 @@ public class QueryEngineTest {
 	
 	@Before
 	public void setUp() throws SQLException {
-		 qengine = new QueryEngine();		
+		 qengine = new QueryEngine();
 	}
 	
 	@Test
@@ -90,9 +92,22 @@ public class QueryEngineTest {
 		searchparam.setYearOfPublication(1989);
 		searchparam.setSearchType("conference");
 		searchparam.setKeywords(keywords);
-		
-		
+				
 		int expectedAuthors = 20;
 		assertEquals(expectedAuthors, qengine.query(searchparam).size());
+	}
+	
+	@Test
+	public void CreateSQLQueryTest() {
+		searchparam = new SearchParameters();
+		keywords = new ArrayList<String>();	
+		keywords.add("Map Reduce");
+		keywords.add("Machine Learning");
+		confNames = new ArrayList<String>();
+		searchparam.setYearOfPublication(1989);
+		searchparam.setSearchType("conference");
+		searchparam.setKeywords(keywords);
+
+		assertNotNull(qengine.createSQLQuery(searchparam));
 	}
 }

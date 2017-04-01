@@ -206,6 +206,13 @@ public class JournalSearch extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// numValidator(yearTextField);
 			SearchParameters searchParameters = generateSearchParameters();
+            int year = Calendar.getInstance().get(Calendar.YEAR);
+			if (searchParameters.getYearOfPublication() > year){
+				JOptionPane.showMessageDialog(null,
+						"Searched year is in future!", "WARNING!!",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 			if (searchParameters.isEmpty()){
 				JOptionPane.showMessageDialog(null,
 						"No Search parameters specified!", "WARNING!!",

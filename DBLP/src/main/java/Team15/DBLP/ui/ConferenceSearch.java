@@ -252,6 +252,13 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 			}
 			searchParameters.setConferenceNames(conferenceNamesList);
 		}
+		
+		if (conferenceNames.isEmpty())
+		{
+			JOptionPane.showMessageDialog(null,
+					"Search field cannot be empty!", "WARNING!!",
+					JOptionPane.WARNING_MESSAGE);
+		}
 
 		String keywordsString = keywordTextField.getText();
 		ArrayList<String> keywordList = new ArrayList<String>();

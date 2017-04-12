@@ -254,7 +254,7 @@ public class JournalSearch extends JFrame implements ActionListener {
 		if (journalNames.isEmpty())
 		{
 			JOptionPane.showMessageDialog(null,
-					"Search field cannot be empty!", "WARNING!!",
+					"Search field for journal name cannot be empty!", "WARNING!!",
 					JOptionPane.WARNING_MESSAGE);
 		}
 

@@ -245,6 +245,12 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 		String conferenceNames = conferenceTextField.getText();
 		ArrayList<String> conferenceNamesList = new ArrayList<String>();
 		searchParameters.setConferenceNames(conferenceNamesList);
+		if (conferenceNames.isEmpty())
+		{
+			JOptionPane.showMessageDialog(null,
+					"Search field for conference name cannot be empty!", "WARNING!!",
+					JOptionPane.WARNING_MESSAGE);	
+		}	
 		if (!conferenceNames.isEmpty()) {
 			String[] conferenceNamesArray = conferenceNames.split(",");
 			for (int i = 0; i < conferenceNamesArray.length; i++) {
@@ -253,12 +259,6 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 			searchParameters.setConferenceNames(conferenceNamesList);
 		}
 		
-		if (conferenceNames.isEmpty())
-		{
-			JOptionPane.showMessageDialog(null,
-					"Search field cannot be empty!", "WARNING!!",
-					JOptionPane.WARNING_MESSAGE);
-		}
 
 		String keywordsString = keywordTextField.getText();
 		ArrayList<String> keywordList = new ArrayList<String>();
@@ -274,7 +274,7 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 		String year = yearTextField.getText();
 		if (!year.isEmpty())
 			searchParameters.setYearOfPublication(Integer.parseInt(year));
-
+		
 		return searchParameters;
 	}
 

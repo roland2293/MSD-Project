@@ -27,7 +27,7 @@ public class AuthorResult extends JFrame {
 	 */
 	public AuthorResult(List<String> authors, String searchType) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 581, 481);
+		setBounds(100, 100, 600, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -72,14 +72,15 @@ public class AuthorResult extends JFrame {
 		lblJournal.setBounds(26, 107, 66, 16);
 		panel.add(lblJournal);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(135, 59, 440, 394);
-		contentPane.add(scrollPane);
-
 		JTextArea textArea = new JTextArea();
 		textArea.setEditable(false);
-		scrollPane.setViewportView(textArea);
+		textArea.setBounds(135, 30, 500, 500);
 		textArea.setText(generateString(authors));
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(135, 59, 430, 382);
+		scrollPane.setViewportView(textArea);
+		contentPane.add(scrollPane);
 
 		JButton btnBack = new JButton("Back");
 		if (searchType.equals("conference")) {
@@ -99,11 +100,11 @@ public class AuthorResult extends JFrame {
 				}
 			});
 		}
-		btnBack.setBounds(458, 18, 117, 29);
+		btnBack.setBounds(458, 18, 117, 30);
 		contentPane.add(btnBack);
-
-		JLabel lblNewLabel = new JLabel("Author Result");
-		lblNewLabel.setBounds(135, 23, 86, 16);
+		
+		JLabel lblNewLabel = new JLabel("Author Results");
+		lblNewLabel.setBounds(135, 23, 86, 30);
 		contentPane.add(lblNewLabel);
 
 	}

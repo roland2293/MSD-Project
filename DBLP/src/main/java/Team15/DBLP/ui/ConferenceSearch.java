@@ -245,12 +245,6 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 		String conferenceNames = conferenceTextField.getText();
 		ArrayList<String> conferenceNamesList = new ArrayList<String>();
 		searchParameters.setConferenceNames(conferenceNamesList);
-		if (conferenceNames.isEmpty())
-		{
-			JOptionPane.showMessageDialog(null,
-					"Search field for conference name cannot be empty!", "WARNING!!",
-					JOptionPane.WARNING_MESSAGE);	
-		}	
 		if (!conferenceNames.isEmpty()) {
 			String[] conferenceNamesArray = conferenceNames.split(",");
 			for (int i = 0; i < conferenceNamesArray.length; i++) {

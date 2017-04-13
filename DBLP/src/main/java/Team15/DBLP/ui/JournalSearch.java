@@ -250,13 +250,6 @@ public class JournalSearch extends JFrame implements ActionListener {
 			}
 			searchParameters.setJournalNames(journalNamesList);
 		}
-		
-		if (journalNames.isEmpty())
-		{
-			JOptionPane.showMessageDialog(null,
-					"Search field for journal name cannot be empty!", "WARNING!!",
-					JOptionPane.WARNING_MESSAGE);
-		}
 
 		String keywordsString = keywordTextField.getText();
 		ArrayList<String> keywordList = new ArrayList<String>();

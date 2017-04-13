@@ -252,6 +252,7 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 			}
 			searchParameters.setConferenceNames(conferenceNamesList);
 		}
+		
 
 		String keywordsString = keywordTextField.getText();
 		ArrayList<String> keywordList = new ArrayList<String>();
@@ -267,7 +268,7 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 		String year = yearTextField.getText();
 		if (!year.isEmpty())
 			searchParameters.setYearOfPublication(Integer.parseInt(year));
-
+		
 		return searchParameters;
 	}
 

@@ -43,11 +43,11 @@ public class QueryEngine {
 
 		if(searchParameters != null){		
 			if(searchParameters.getSearchType().equalsIgnoreCase("conference")){
-				query = new StringBuilder("select distinct a.name from AuthorPaper as a where");	
+				query = new StringBuilder("select distinct a.name from AuthorPaper as a where ");	
 				confType ="conference";
 				key = "paper_key";
 			}else{
-				query = new StringBuilder("select distinct a.name from AuthorArticle as a where");
+				query = new StringBuilder("select distinct a.name from AuthorArticle as a where ");
 				confType ="journal";
 				key = "journal_key";
 			}	
@@ -79,7 +79,9 @@ public class QueryEngine {
 			}
 
 			if(searchParameters.getConferenceNames() != null && searchParameters.getConferenceNames().size()>0 && confType.equals("conference")){
+				if(searchParameters.getYearOfPublication()>0){
 				query.append(" and( ");
+				}
 				boolean first = true;
 				for(String strr : searchParameters.getConferenceNames())	{
 					if (first){
@@ -95,11 +97,15 @@ public class QueryEngine {
 					query.append("or  a."+key+" like ? ");
 					++paramCount;
 				}
-				query.append(")");
+				if(searchParameters.getYearOfPublication()>0){
+					query.append(")");
+				}
 			}
 
 			if(searchParameters.getJournalNames() != null && searchParameters.getJournalNames().size()>0 && confType.equals("journal") ){
+				if(searchParameters.getYearOfPublication()>0){
 				query.append(" and( ");
+				}
 				boolean first = true;
 				for(String strr : searchParameters.getJournalNames())	{
 					if (first){
@@ -115,7 +121,9 @@ public class QueryEngine {
 					query.append("or  a."+key+" like ? ");
 					++paramCount;
 				}
+				if(searchParameters.getYearOfPublication()>0){
 				query.append(")");
+				}
 			}
 			str= query.toString();
 

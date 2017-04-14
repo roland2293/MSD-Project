@@ -14,6 +14,15 @@ public class Author {
 	private String homePageURL;
 	private HashSet<String> area;
 	private int numberOfJournalPaperPublished;
+	private int citations;
+
+	public int getCitations() {
+		return citations;
+	}
+
+	public void setCitations(int citations) {
+		this.citations = citations;
+	}
 
 	public HashSet<String> getArea() {
 		return area;

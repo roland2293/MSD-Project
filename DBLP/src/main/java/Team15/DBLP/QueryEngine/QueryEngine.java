@@ -13,14 +13,24 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.crypto.CipherInputStream;
+
 import Team15.DBLP.db.DBConnection;
+import Team15.DBLP.ui.Author;
 
 public class QueryEngine {
+	HashMap<String,ArrayList<Integer>> confCount;
+	HashMap<String,ArrayList<Integer>> jorCount;
+	HashMap<String,ArrayList<String>> authInfo;
 
 	PreparedStatement pStmt;
 	PreparedStatement filtStmt;
@@ -28,6 +38,56 @@ public class QueryEngine {
 	private int paramCount=0;
 	SearchParameters searchParameters;
 	List<String> authList=null;
+	
+	public QueryEngine(){
+		super();
+		confCount = new HashMap<>();
+		jorCount = new HashMap<>();
+		authInfo = new HashMap<>();
+		Connection con = DBConnection.getConn();
+	    String query = "SELECT * from authorConferenceCount";
+	    String query2= "SELECT * from authorJournalCount";
+	    String query3= "SELECT * from authorDetails";
+	    Statement stmt=null;
+		try {
+			stmt = con.createStatement();
+	        ResultSet rs = stmt.executeQuery(query);
+	        while (rs.next()) {
+	            String confName = rs.getString("name");
+	            int conCount = rs.getInt("conferenceCount");
+	            int citCount = rs.getInt("citationCount");
+	            confCount.put(confName, new ArrayList<>(Arrays.asList(conCount, citCount)));
+	        }
+	        rs = stmt.executeQuery(query2);
+	        while (rs.next()) {
+	        	String confName = rs.getString("name");
+		        int jouCount = rs.getInt("journalCount");
+		        int citCount = rs.getInt("citationCount");
+	            jorCount.put(confName, new ArrayList<>(Arrays.asList(jouCount, citCount)));
+	        }
+	        rs = stmt.executeQuery(query3);
+	        while (rs.next()) {
+	            String name = rs.getString("authorname");
+	            String region = rs.getString("region");
+	            String homepage = rs.getString("homepage");
+	            String area = rs.getString("area");
+	            authInfo.put(name, new ArrayList<String>(Arrays.asList(region, homepage,area)));
+	        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		finally {
+	        if (stmt != null){ try {
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} }
+	    }
+	    
+	    		
+		
+	}
  
 	/**
 	 * Given Search parameters(Object containing queries) it parses every parameter and generates a sql query.
@@ -192,7 +252,7 @@ public class QueryEngine {
 	List<String> parseResults(ResultSet resultSet) throws SQLException{
 		List<String> authorList = new ArrayList<String>();
 		while(resultSet.next()){
-			String authorName = resultSet.getString("name");
+			String authorName = resultSet.getString("name");		
 			authorList.add(authorName); 
 		}
 		return authorList;
@@ -215,12 +275,61 @@ public class QueryEngine {
 			this.authList=authors;
 			filterEligibleAuth();
 			conn.close();
+			
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}				
+		}			
 		return authors;
+	}
+	
+	public List<Author> queryInfo (SearchParameters searchparam){
+		conn =  DBConnection.getConn();
+		this.searchParameters = searchparam;
+		List<String> authors = null;
+		List<Author> authList = new ArrayList<>(); 
+		try {
+			String sqlQuery = createSQLQuery(searchParameters);
+			ResultSet rs = executeSQLQuery(sqlQuery);
+			authors = parseResults(rs);
+			//this.authList=authors;
+			//filterEligibleAuth();
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}				
+		
+		for(String authorName:authors){
+			int confcount = confCount.containsKey(authorName)?confCount.get(authorName).get(0):0;
+			int jorcount =  jorCount.containsKey(authorName)?jorCount.get(authorName).get(0):0;
+			
+			int citCount=0;
+			if(confcount !=0 && jorcount != 0){
+				citCount = confCount.get(authorName).get(1)+ jorCount.get(authorName).get(1);
+			}
+						
+			String region = authInfo.containsKey(authorName)?authInfo.get(authorName).get(0):" ";
+			String homepage = authInfo.containsKey(authorName)?authInfo.get(authorName).get(0):" ";
+			String area = authInfo.containsKey(authorName)?authInfo.get(authorName).get(0):" ";
+			
+			Author author = new Author();
+			author.setName(authorName);
+			author.setRegion(region);
+			HashSet<String> hs = new HashSet<>();
+			hs.add(area);
+			author.setArea(hs);
+			author.setHomePageURL(homepage);
+			author.setNumberOfConferencePaperPublished(confcount);
+			author.setNumberOfJournalPaperPublished(jorcount);
+			author.setCitations(citCount);
+			
+			authList.add(author);
+			
+		}
+		
+		return authList;
 	}
 	
 	/**this method filters the author who have already served in last 3 years commitee, 

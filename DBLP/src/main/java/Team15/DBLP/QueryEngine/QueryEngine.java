@@ -285,22 +285,10 @@ public class QueryEngine {
 	}
 	
 	public List<Author> queryInfo (SearchParameters searchparam){
-		conn =  DBConnection.getConn();
-		this.searchParameters = searchparam;
-		List<String> authors = null;
-		List<Author> authList = new ArrayList<>(); 
-		try {
-			String sqlQuery = createSQLQuery(searchParameters);
-			ResultSet rs = executeSQLQuery(sqlQuery);
-			authors = parseResults(rs);
-			//this.authList=authors;
-			//filterEligibleAuth();
-			conn.close();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}				
-		
+		List<String> authors = query(searchparam);
+		List<Author> authList = new ArrayList<>(); 
+
 		for(String authorName:authors){
 			int confcount = confCount.containsKey(authorName)?confCount.get(authorName).get(0):0;
 			int jorcount =  jorCount.containsKey(authorName)?jorCount.get(authorName).get(0):0;

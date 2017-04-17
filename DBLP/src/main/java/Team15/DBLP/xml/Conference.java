@@ -1,10 +1,12 @@
 package Team15.DBLP.xml;
 
 /**
+ * A conference consists of a key, name and detail.
+ * 
  * @author paurav
  *
  */
- // A conference consists of a key, name and detail.
+
 public class Conference {
 	public String key;
 	public String name;
@@ -17,8 +19,8 @@ public class Conference {
 
 	@Override
 	public String toString() {
-		return "Conference [key=" + key + ", name=" + name
-				+ ", detail=" + detail + "]";
+		return "Conference [key=" + key + ", name=" + name + ", detail="
+				+ detail + "]";
 	}
 
 	public static int getElement(String name) {

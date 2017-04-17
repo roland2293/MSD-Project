@@ -3,11 +3,13 @@ package Team15.DBLP.xml;
 import java.util.ArrayList;
 
 /**
+ * A Paper consists of a key, title, Year published, Conference Name, a list of
+ * authors, and the citations in each paper.
+ * 
  * @author paurav
  *
  */
- // A Paper consists of a key, title, Year published,Confernece Name, a list of authors, and the citations in each
- // paper.
+
 public class Paper {
 	public String key;
 	public String title;
@@ -24,9 +26,10 @@ public class Paper {
 	public static final int CITE = 5;
 	public static final int CONFERENCE = 6;
 
-	public String toString(){
-		return "title: " + title + " authors: " + authors.toString() + " citations: " + citations.toString()+
-				" conference: " + conference + " year: " + year + " key: " + key;
+	public String toString() {
+		return "title: " + title + " authors: " + authors.toString()
+				+ " citations: " + citations.toString() + " conference: "
+				+ conference + " year: " + year + " key: " + key;
 	}
 
 	public static int getElement(String name) {
@@ -34,9 +37,8 @@ public class Paper {
 			return INPROCEEDING;
 		} else if (name.equals("author")) {
 			return AUTHOR;
-		} else if (name.equals("title") || name.equals("sub")
-				|| name.equals("sup") || name.equals("i")
-				|| name.equals("tt")) {
+		} else if (name.equals("title") || name.equals("sub") || name.equals(
+				"sup") || name.equals("i") || name.equals("tt")) {
 			return TITLE;
 		} else if (name.equals("year")) {
 			return YEAR;

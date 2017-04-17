@@ -3,11 +3,13 @@ package Team15.DBLP.xml;
 import java.util.ArrayList;
 
 /**
+ * A Journal consists of a key, title, Year published, Volume Number, Journal
+ * Name, a list of authors, and the citations in each journal.
+ * 
  * @author paurav
  *
  */
- // A Journal consists of a key, title, Year published, Volume Number, Journal Name, a list of authors, and the
- // citations in each journal.
+
 public class Journal {
 	public String key;
 	public String title;
@@ -26,25 +28,27 @@ public class Journal {
 	public static final int JOURNAL = 6;
 	public static final int VOLUME = 7;
 
-	public String toString(){
-		return "title: " + title + " authors: " + authors.toString() +
-				" journal: " + journal + " year: " + year + " volume:" + volume +" key: " + key;
+	public String toString() {
+		return "title: " + title + " authors: " + authors.toString()
+				+ " journal: " + journal + " year: " + year + " volume:"
+				+ volume + " key: " + key;
 	}
+
 	public static int getElement(String name) {
 		if (name.equals("article")) {
 			return ARTICLE;
 		} else if (name.equals("author")) {
 			return AUTHOR;
-		} else if (name.equals("title") || name.equals("sub") || name.equals("sup") || name.equals("i")||name.equals("tt")) {
+		} else if (name.equals("title") || name.equals("sub") || name.equals(
+				"sup") || name.equals("i") || name.equals("tt")) {
 			return TITLE;
 		} else if (name.equals("year")) {
 			return YEAR;
 		} else if (name.equals("cite")) {
 			return CITE;
-		}
-		 else if (name.equals("volume")) {
-				return VOLUME;
-		}else if (name.equals("journal") || name.equals("booktitle")) {
+		} else if (name.equals("volume")) {
+			return VOLUME;
+		} else if (name.equals("journal") || name.equals("booktitle")) {
 			return JOURNAL;
 		} else {
 			return OTHER;
@@ -64,10 +68,9 @@ public class Journal {
 			return "cite";
 		} else if (i == JOURNAL) {
 			return "journal";
-		}
-		else if (i == VOLUME) {
-				return "volume";
-		}else {
+		} else if (i == VOLUME) {
+			return "volume";
+		} else {
 			return "other";
 		}
 	}

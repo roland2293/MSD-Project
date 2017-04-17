@@ -14,6 +14,8 @@ import org.xml.sax.helpers.*;
 import Team15.DBLP.db.DBConnection;
 
 /**
+ * Parse for parsing the DBLP data. It uses SAX parser to parse the xml.
+ * 
  * @author paurav
  *
  */
@@ -238,7 +240,7 @@ public class Parser {
 					stmt_cite.executeBatch();
 					stmt_injournal.executeBatch();
 					conn.commit();
-					// System.out.println("Processing " + line);
+					System.out.println("Processing " + line);
 				} catch (SQLException e) {
 					System.err.println(e.getMessage());
 				}
@@ -290,8 +292,8 @@ public class Parser {
 			SAXParserFactory parserFactory = SAXParserFactory.newInstance();
 			SAXParser parser = parserFactory.newSAXParser();
 			ConfigHandler handler = new ConfigHandler();
-			parser.getXMLReader()
-					.setFeature("http://xml.org/sax/features/validation", true);
+			parser.getXMLReader().setFeature(
+					"http://xml.org/sax/features/validation", true);
 			parser.parse(new File(uri), handler);
 			if (!test) {
 				try {
@@ -313,20 +315,21 @@ public class Parser {
 		} catch (SAXException e) {
 			System.out.println("Error in parsing: " + e.getMessage());
 		} catch (ParserConfigurationException e) {
-			System.out.println(
-					"Error in XML parser configuration: " + e.getMessage());
+			System.out.println("Error in XML parser configuration: " + e
+					.getMessage());
 		}
 	}
 
-	public static void main(String[] args)
-			throws SQLException, ClassNotFoundException, IOException {
+	public static void main(String[] args) throws SQLException,
+			ClassNotFoundException, IOException {
 		Long start = System.currentTimeMillis();
 		Parser p = new Parser(args[0], false);
-		CommitteesParser committeesParser = new CommitteesParser();
-		committeesParser.setFolder(args[1]);
-		committeesParser.parser(false);
+		// CommitteesParser committeesParser = new CommitteesParser();
+		// committeesParser.setFolder(args[1]);
+		// committeesParser.parser(false);
+
 		Long end = System.currentTimeMillis();
 		System.out.println("Used: " + (end - start) / 1000 + " seconds");
-		
+
 	}
 }

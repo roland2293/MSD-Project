@@ -309,7 +309,6 @@ public class Parser {
 				}
 			}
 			System.out.println("num of errors: " + errors);
-			conn.close();
 		} catch (IOException e) {
 			System.out.println("Error reading URI: " + e.getMessage());
 		} catch (SAXException e) {
@@ -317,6 +316,8 @@ public class Parser {
 		} catch (ParserConfigurationException e) {
 			System.out.println("Error in XML parser configuration: " + e
 					.getMessage());
+		} finally {
+			conn.close();
 		}
 	}
 

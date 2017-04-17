@@ -1,22 +1,15 @@
 package Team15.DBLP.ui;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
 import Team15.DBLP.QueryEngine.QueryEngine;
 import Team15.DBLP.QueryEngine.SearchParameters;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
 public class ConferenceSearch extends JFrame implements ActionListener {
 
@@ -79,7 +72,7 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 	 */
 	public ConferenceSearch() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 500);
+		setBounds(100, 100, 581, 481);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -204,7 +197,7 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// numValidator(yearTextField);
 			SearchParameters searchParameters = generateSearchParameters();
-            int year = Calendar.getInstance().get(Calendar.YEAR);
+			int year = Calendar.getInstance().get(Calendar.YEAR);
 			if (searchParameters.getYearOfPublication() > year){
 				JOptionPane.showMessageDialog(null,
 						"Searched year is in future!", "WARNING!!",
@@ -221,7 +214,7 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 			QueryEngine queryEngine = new QueryEngine();
 			List<String> authorNames = queryEngine.query(searchParameters);
 			AuthorResult authorFrame = new AuthorResult(authorNames,
-					"conference");
+					"conference", searchParameters);
 			frame.setVisible(false);
 			authorFrame.setVisible(true);
 
@@ -252,7 +245,6 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 			}
 			searchParameters.setConferenceNames(conferenceNamesList);
 		}
-		
 
 		String keywordsString = keywordTextField.getText();
 		ArrayList<String> keywordList = new ArrayList<String>();
@@ -268,7 +260,7 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 		String year = yearTextField.getText();
 		if (!year.isEmpty())
 			searchParameters.setYearOfPublication(Integer.parseInt(year));
-		
+
 		return searchParameters;
 	}
 

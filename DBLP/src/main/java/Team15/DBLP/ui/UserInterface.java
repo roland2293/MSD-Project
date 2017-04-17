@@ -421,7 +421,7 @@ public class UserInterface extends JFrame {
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new BackToSearchActionListner());
-		btnBack.setBounds(174, 433, 151, 33);
+		btnBack.setBounds(174, 433, 117, 29);
 		panelResult.add(btnBack);
 		
 		JLabel lblNewLabel = new JLabel("Author Results");

@@ -8,12 +8,12 @@ import javax.swing.JTextField;
 import org.junit.Before;
 import org.junit.Test;
 
-import Team15.DBLP.ui.JournalSearch;
+import Team15.DBLP.ui.UserInterface;
 import Team15.DBLP.QueryEngine.SearchParameters;
 
 public class JournalSearchTest {
 
-	static JournalSearch journalSearch;
+	static UserInterface ui;
 	JTextField yearTextField;
 	JTextField keywordTextField;
 	JTextField journalTextfield;
@@ -23,13 +23,13 @@ public class JournalSearchTest {
 
 	@Before
 	public void setUp() {
-		journalSearch = new JournalSearch();
-		yearTextField = journalSearch.getYearTextField();
-		keywordTextField = journalSearch.getKeywordTextField();
-		journalTextfield = journalSearch.getJournalTextfield();
-		volumeField = journalSearch.getVolumeField();
-		chckbxAssociateEditor = journalSearch.getChckbxAssociateEditor();
-		chckbxEditorinChief = journalSearch.getChckbxEditorinChief();
+		ui = new UserInterface();
+		yearTextField = ui.getYearTextField();
+		keywordTextField = ui.getKeywordTextField();
+		journalTextfield = ui.getJournalTextfield();
+		volumeField = ui.getVolumeField();
+		chckbxAssociateEditor = ui.getChckbxAssociateEditor();
+		chckbxEditorinChief = ui.getChckbxEditorinChief();
 	}
 
 	@Test
@@ -50,8 +50,8 @@ public class JournalSearchTest {
 		journalTextfield.setText("Journal of Biomedical Informatics, jbi");
 		volumeField.setText("30");
 
-		SearchParameters searchParameters = journalSearch
-				.generateSearchParameters();
+		SearchParameters searchParameters = ui
+				.generateJournalSearchParameters();
 
 		assertEquals("journal", searchParameters.getSearchType());
 		assertEquals(2006, searchParameters.getYearOfPublication());

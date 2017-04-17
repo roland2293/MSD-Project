@@ -1,19 +1,12 @@
 package Team15.DBLP.ui;
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
 import Team15.DBLP.QueryEngine.QueryEngine;
 import Team15.DBLP.QueryEngine.SearchParameters;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.sql.SQLException;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -74,7 +67,7 @@ public class JournalSearch extends JFrame implements ActionListener {
 	 */
 	public JournalSearch() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 500);
+		setBounds(100, 100, 581, 481);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -207,7 +200,7 @@ public class JournalSearch extends JFrame implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			// numValidator(yearTextField);
 			SearchParameters searchParameters = generateSearchParameters();
-            int year = Calendar.getInstance().get(Calendar.YEAR);
+			int year = Calendar.getInstance().get(Calendar.YEAR);
 			if (searchParameters.getYearOfPublication() > year){
 				JOptionPane.showMessageDialog(null,
 						"Searched year is in future!", "WARNING!!",
@@ -222,8 +215,8 @@ public class JournalSearch extends JFrame implements ActionListener {
 			}
 			System.out.println(searchParameters.toString());
 			QueryEngine queryEngine = new QueryEngine();
-			List<String> authorNames = queryEngine.query(searchParameters);
-			AuthorResult authorFrame = new AuthorResult(authorNames, "journal");
+			List<Author> authorNames = queryEngine.queryInfo(searchParameters);
+			AuthorResult authorFrame = new AuthorResult(authorNames, "journal", searchParameters);
 			frame.setVisible(false);
 			authorFrame.setVisible(true);
 

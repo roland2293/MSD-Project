@@ -1,5 +1,7 @@
 package Team15.DBLP.ui;
 
+import Team15.DBLP.QueryEngine.SearchParameters;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -7,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AuthorResult extends JFrame {
@@ -17,7 +20,7 @@ public class AuthorResult extends JFrame {
     /**
      * Create the frame.
      */
-    public AuthorResult(List<String> authors, String searchType) {
+    public AuthorResult(List<Author> authors, String searchType, SearchParameters searchParameters) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 581, 481);
         contentPane = new JPanel();
@@ -69,7 +72,11 @@ public class AuthorResult extends JFrame {
         contentPane.add(scrollPane);
 
         // Use JList instead of JTextArea to make each row as selectable.
-        JList<String> listAuthors = new JList<>(generateString(authors));
+        List<String> authorNames = new ArrayList<String>();
+        for(Author author: authors){
+            authorNames.add(author.getName());
+        }
+        JList<String> listAuthors = new JList<>(generateString(authorNames));
 
         // Add listener to jlist to open a new window once the user clicks on
         // the row.
@@ -77,26 +84,38 @@ public class AuthorResult extends JFrame {
 
             // To avoid invoking of this method twice.
             if (!e.getValueIsAdjusting()) {
-                JPanel jpMain = new JPanel(new BorderLayout()); // Create the main.
+                JPanel jpMain = new JPanel(new BorderLayout()); // Create the main panel
                 jpMain.setPreferredSize(new Dimension(400, 200));
                 jpMain.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 
+                Author selectedAuthor = null;
+
+                for (Author author : authors) {
+                    if (author.getName().equalsIgnoreCase(listAuthors.getSelectedValue())) {
+                        selectedAuthor = author;
+                    }
+                }
+
+                if (selectedAuthor == null) { // If author not found.
+                    return; // Just return.
+                }
+
                 // Build center panel with all labels.
                 JPanel jpCenter = new JPanel(new GridLayout(7, 2));
-                jpCenter.add(new JLabel("Full Name: "));
+                jpCenter.add(new JLabel("Name: "));
                 jpCenter.add(new JLabel(listAuthors.getSelectedValue()));
-                jpCenter.add(new JLabel("Title: "));
-                jpCenter.add(new JLabel());
-                jpCenter.add(new JLabel("Year: "));
-                jpCenter.add(new JLabel());
-                jpCenter.add(new JLabel("Pages: "));
-                jpCenter.add(new JLabel());
-                jpCenter.add(new JLabel("Journal: "));
-                jpCenter.add(new JLabel());
-                jpCenter.add(new JLabel("Volume: "));
-                jpCenter.add(new JLabel());
-                jpCenter.add(new JLabel("Number: "));
-                jpCenter.add(new JLabel());
+                jpCenter.add(new JLabel("Number of Conference Papers: "));
+                jpCenter.add(new JLabel(selectedAuthor.getNumberOfConferencePaperPublished() + ""));
+                jpCenter.add(new JLabel("Number of Journal Papers: "));
+                jpCenter.add(new JLabel(selectedAuthor.getNumberOfJournalPaperPublished() + ""));
+                jpCenter.add(new JLabel("Number of Citations: "));
+                jpCenter.add(new JLabel(selectedAuthor.getCitations() + ""));
+                jpCenter.add(new JLabel("University:"));
+                jpCenter.add(new JLabel(selectedAuthor.getUniversityName()));
+                jpCenter.add(new JLabel("HomepageURL:"));
+                jpCenter.add(new JLabel(selectedAuthor.getHomePageURL()));
+                jpCenter.add(new JLabel("Region:"));
+                jpCenter.add(new JLabel(selectedAuthor.getRegion()));
 
 
                 // Add center panel to the main panel.
@@ -106,7 +125,6 @@ public class AuthorResult extends JFrame {
                 // Create frame to display and add the main panel to it.
                 JFrame jf = new JFrame("Profile Lookup - " + listAuthors.getSelectedValue());
                 jf.add(jpMain);
-                jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 jf.pack();
                 jf.setLocationRelativeTo(null);
                 jf.setVisible(true);
@@ -150,4 +168,5 @@ public class AuthorResult extends JFrame {
         names = authors.toArray(names);
         return names;
     }
+
 }

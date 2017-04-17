@@ -35,7 +35,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 public class UserInterface extends JFrame {
-	// TODO: Add getter for all variables except frame
+	// Intial parameters with getters
 	public static JFrame frame;
 	private QueryEngine queryEngine = null;
 	private JTabbedPane tabbedPaneSearch;
@@ -49,7 +49,14 @@ public class UserInterface extends JFrame {
 		return authorDetails;
 	}
 	
-	// Conference Search Fields declarations
+	QueryEngine getInstance(){
+		if(queryEngine == null){
+			queryEngine = new QueryEngine();
+		}
+		return queryEngine;
+	}
+	
+	// Conference Search Fields declarations with getters
 	private JTextField yearTextField;
 	private JTextField keywordTextField;
 	private JTextField conferenceTextField;
@@ -57,7 +64,7 @@ public class UserInterface extends JFrame {
 	private JCheckBox  chckbxProgramChair;
 	private JCheckBox  chckbxConferenceChair;
 	private JCheckBox  chckbxCommitteMember;
-	private  JButton   btnConferenceSearchButton;
+	private JButton    btnConferenceSearchButton;
 	
 	public JTextField getYearTextField() {
 		return yearTextField;
@@ -91,7 +98,7 @@ public class UserInterface extends JFrame {
 		return btnConferenceSearchButton;
 	}
 	
-	// Journal Search Fields declarations
+	// Journal Search Fields declarations with getters
 	private JTextField jyearTextField;
 	private JTextField jkeywordTextField;
 	private JTextField journalTextfield;
@@ -128,7 +135,7 @@ public class UserInterface extends JFrame {
 		return btnJournalSearchButton;
 	}
 	
-	// Search Results Fields declarations
+	// Search Results Fields declarations with getters
 	private JPanel panelResult;
 	public List<String> authorNames;
 	private DefaultListModel<String> listModel;
@@ -154,13 +161,7 @@ public class UserInterface extends JFrame {
 	public String getSearchType() {
 		return searchType;
 	}
-	
-	 QueryEngine getInstance(){
-		if(queryEngine == null){
-			queryEngine = new QueryEngine();
-		}
-		return queryEngine;
-	}
+	 
 	public UserInterface() {
 		// Frame initialization
 		setBounds(0, 0, 600, 600);
@@ -539,6 +540,12 @@ public class UserInterface extends JFrame {
 			//btnJournalSearchButton.setEnabled(false);
 			SearchParameters searchParameters = generateJournalSearchParameters();
             int year = Calendar.getInstance().get(Calendar.YEAR);
+            if (searchParameters.getYearOfPublication() < 1900){
+				JOptionPane.showMessageDialog(null,
+						"Searched year is out of scope!", "WARNING!!",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			}
 			if (searchParameters.getYearOfPublication() > year){
 				JOptionPane.showMessageDialog(null,
 						"Searched year is in future!", "WARNING!!",
@@ -546,6 +553,12 @@ public class UserInterface extends JFrame {
 				return;
 			}
 			if (searchParameters.isEmpty()){
+				if(searchParameters.getVolume()!=null){
+					JOptionPane.showMessageDialog(null,
+							"Cannot search with volume alone!", "WARNING!!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
 				JOptionPane.showMessageDialog(null,
 						"No Search parameters specified!", "WARNING!!",
 						JOptionPane.WARNING_MESSAGE);

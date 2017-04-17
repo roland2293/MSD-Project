@@ -345,12 +345,12 @@ public class UserInterface extends JFrame {
 		panelJournal.add(lblJournalSelectIfThe);
 
 		chckbxAssociateEditor = new JCheckBox("Associate Editor");
-		chckbxAssociateEditor.setEnabled(false);
+		chckbxAssociateEditor.setEnabled(true);
 		chckbxAssociateEditor.setBounds(162, 314, 192, 23);
 		panelJournal.add(chckbxAssociateEditor);
 
 		chckbxEditorinChief = new JCheckBox("Editor in Chief");
-		chckbxEditorinChief.setEnabled(false);
+		chckbxEditorinChief.setEnabled(true);
 		chckbxEditorinChief.setBounds(162, 349, 192, 23);
 		panelJournal.add(chckbxEditorinChief);
 		
@@ -481,11 +481,7 @@ public class UserInterface extends JFrame {
 	        }
 	        //btnConferenceSearchButton.setEnabled(true);
 		}
-		
-
 	}
-	
-
 
 	// Generate Conference Search Parameters
 	public SearchParameters generateConferenceSearchParameters() {

@@ -32,6 +32,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 
 public class UserInterface extends JFrame {
 	// TODO: Add getter for all variables except frame
@@ -171,7 +172,7 @@ public class UserInterface extends JFrame {
 		
 		// Home Tabbed Pane
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
-		tabbedPane.setBounds(10, 11, 564, 539);
+		tabbedPane.setBounds(6, 0, 564, 539);
 		getContentPane().add(tabbedPane, BorderLayout.CENTER);
 		
 		// Panel for Home Page
@@ -284,27 +285,31 @@ public class UserInterface extends JFrame {
 		panelJournal.setLayout(null);
 		
 		JLabel lblJournalName = new JLabel("Journal Name");
-		lblJournalName.setBounds(59, 97, 65, 14);
+		lblJournalName.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblJournalName.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblJournalName.setBounds(47, 97, 96, 23);
 		panelJournal.add(lblJournalName);
 
 		JLabel lblJournalSearch = new JLabel("Journal Search");
-		lblJournalSearch.setBounds(162, 39, 71, 14);
+		lblJournalSearch.setHorizontalTextPosition(SwingConstants.CENTER);
+		lblJournalSearch.setHorizontalAlignment(SwingConstants.CENTER);
+		lblJournalSearch.setBounds(153, 33, 115, 20);
 		panelJournal.add(lblJournalSearch);
 
 		jyearTextField = new JTextField();
-		jyearTextField.setBounds(162, 138, 86, 20);
+		jyearTextField.setBounds(162, 138, 192, 27);
 		panelJournal.add(jyearTextField);
 		jyearTextField.setColumns(10);
 		Numvalidator(jyearTextField);
 
 		jkeywordTextField = new JTextField();
 		jkeywordTextField.setColumns(10);
-		jkeywordTextField.setBounds(162, 177, 86, 20);
+		jkeywordTextField.setBounds(162, 177, 192, 27);
 		panelJournal.add(jkeywordTextField);
 
 		journalTextfield = new JTextField();
 		journalTextfield.setColumns(10);
-		journalTextfield.setBounds(162, 94, 86, 20);
+		journalTextfield.setBounds(162, 94, 192, 27);
 		panelJournal.add(journalTextfield);
 
 		btnJournalSearchButton = new JButton("Search");
@@ -313,20 +318,25 @@ public class UserInterface extends JFrame {
 		panelJournal.add(btnJournalSearchButton);
 		
 		JLabel lblJournalYear = new JLabel("Year");
-		lblJournalYear.setBounds(91, 142, 33, 16);
+		lblJournalYear.setHorizontalTextPosition(SwingConstants.RIGHT);
+		lblJournalYear.setHorizontalAlignment(SwingConstants.CENTER);
+		lblJournalYear.setBounds(110, 140, 33, 16);
 		panelJournal.add(lblJournalYear);
 
 		JLabel lblJournalKeyword = new JLabel("Keyword");
-		lblJournalKeyword.setBounds(91, 179, 61, 16);
+		lblJournalKeyword.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblJournalKeyword.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblJournalKeyword.setBounds(78, 179, 61, 16);
 		panelJournal.add(lblJournalKeyword);
 
 		volumeField = new JTextField();
 		volumeField.setColumns(10);
-		volumeField.setBounds(162, 217, 192, 28);
+		volumeField.setBounds(162, 217, 192, 27);
 		panelJournal.add(volumeField);
 
 		JLabel lblVolume = new JLabel("Volume");
-		lblVolume.setBounds(91, 223, 61, 16);
+		lblVolume.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblVolume.setBounds(78, 223, 61, 16);
 		panelJournal.add(lblVolume);
 
 		JLabel lblJournalSelectIfThe = new JLabel("Has the author served as the following?");
@@ -351,7 +361,7 @@ public class UserInterface extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportBorder(UIManager.getBorder("ScrollPane.border"));
 		scrollPane.setBorder(null);
-		scrollPane.setBounds(10, 23, 495, 438);
+		scrollPane.setBounds(10, 23, 467, 398);
 		panelResult.add(scrollPane);
 		
 		listModel = new DefaultListModel<String>();
@@ -413,11 +423,11 @@ public class UserInterface extends JFrame {
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new BackToSearchActionListner());
-		btnBack.setBounds(174, 472, 151, 30);
+		btnBack.setBounds(174, 433, 151, 33);
 		panelResult.add(btnBack);
 		
 		JLabel lblNewLabel = new JLabel("Author Results");
-		lblNewLabel.setBounds(189, 0, 86, 30);
+		lblNewLabel.setBounds(189, 0, 99, 30);
 		panelResult.add(lblNewLabel);
 		
 		frame.setVisible(true);
@@ -578,7 +588,7 @@ public class UserInterface extends JFrame {
 
 		String keywordsString = jkeywordTextField.getText();
 		ArrayList<String> keywordList = new ArrayList<String>();
-		searchParameters.setKeywords(journalNamesList);
+		searchParameters.setKeywords(keywordList);
 		if (!keywordsString.isEmpty()) {
 			String[] keywordsArray = keywordsString.split(",");
 			for (int i = 0; i < keywordsArray.length; i++) {

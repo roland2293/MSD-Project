@@ -87,6 +87,7 @@ public class QueryEngine {
 		this.searchParameters = searchParameters;
 		String confType=null;
 		String key=null;
+		paramCount=0;
 
 		if(searchParameters != null){		
 			if(searchParameters.getSearchType().equalsIgnoreCase("conference")){

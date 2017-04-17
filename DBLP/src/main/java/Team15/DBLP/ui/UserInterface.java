@@ -98,6 +98,7 @@ public class UserInterface extends JFrame {
 	private JTextField volumeField;
 	private JCheckBox  chckbxAssociateEditor;
 	private JCheckBox  chckbxEditorinChief;
+	private JButton    btnJournalSearchButton;
 	
 	public JTextField getJournalYearTextField() {
 		return jyearTextField;
@@ -220,11 +221,11 @@ public class UserInterface extends JFrame {
 		panelConference.setLayout(null);
 		
 		JLabel lblAuthorName = new JLabel("Conference Name");
-		lblAuthorName.setBounds(37, 51, 111, 21);
+		lblAuthorName.setBounds(35, 51, 111, 21);
 		panelConference.add(lblAuthorName);
 
 		JLabel lblConferenceSearcg = new JLabel("Conference Search");
-		lblConferenceSearcg.setBounds(135, 6, 149, 16);
+		lblConferenceSearcg.setBounds(199, 6, 149, 16);
 		panelConference.add(lblConferenceSearcg);
 
 		yearTextField = new JTextField();
@@ -292,7 +293,7 @@ public class UserInterface extends JFrame {
 		JLabel lblJournalSearch = new JLabel("Journal Search");
 		lblJournalSearch.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblJournalSearch.setHorizontalAlignment(SwingConstants.CENTER);
-		lblJournalSearch.setBounds(153, 33, 115, 20);
+		lblJournalSearch.setBounds(191, 34, 115, 20);
 		panelJournal.add(lblJournalSearch);
 
 		jyearTextField = new JTextField();
@@ -310,6 +311,11 @@ public class UserInterface extends JFrame {
 		journalTextfield.setColumns(10);
 		journalTextfield.setBounds(162, 94, 192, 27);
 		panelJournal.add(journalTextfield);
+
+		btnJournalSearchButton = new JButton("Search");
+		btnJournalSearchButton.addActionListener(new JournalSearchActionListner());
+		btnJournalSearchButton.setBounds(191, 395, 115, 29);
+		panelJournal.add(btnJournalSearchButton);
 		
 		JLabel lblJournalYear = new JLabel("Year");
 		lblJournalYear.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -339,17 +345,13 @@ public class UserInterface extends JFrame {
 
 		chckbxAssociateEditor = new JCheckBox("Associate Editor");
 		chckbxAssociateEditor.setEnabled(false);
-		chckbxAssociateEditor.setBounds(153, 317, 192, 23);
+		chckbxAssociateEditor.setBounds(162, 314, 192, 23);
 		panelJournal.add(chckbxAssociateEditor);
 
 		chckbxEditorinChief = new JCheckBox("Editor in Chief");
 		chckbxEditorinChief.setEnabled(false);
-		chckbxEditorinChief.setBounds(153, 358, 192, 23);
+		chckbxEditorinChief.setBounds(162, 349, 192, 23);
 		panelJournal.add(chckbxEditorinChief);
-		
-		JButton button = new JButton("Search");
-		button.setBounds(174, 404, 117, 29);
-		panelJournal.add(button);
 		
 		// Panel for Search Results
 		panelResult = new JPanel();
@@ -421,7 +423,7 @@ public class UserInterface extends JFrame {
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new BackToSearchActionListner());
-		btnBack.setBounds(174, 433, 117, 29);
+		btnBack.setBounds(184, 433, 119, 29);
 		panelResult.add(btnBack);
 		
 		JLabel lblNewLabel = new JLabel("Author Results");
@@ -528,6 +530,37 @@ public class UserInterface extends JFrame {
 			searchParameters.setYearOfPublication(Integer.parseInt(year));
 		
 		return searchParameters;
+	}
+	
+	// Implements Search Button in Journal Search
+	class JournalSearchActionListner implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			//btnJournalSearchButton.setEnabled(false);
+			SearchParameters searchParameters = generateJournalSearchParameters();
+            int year = Calendar.getInstance().get(Calendar.YEAR);
+			if (searchParameters.getYearOfPublication() > year){
+				JOptionPane.showMessageDialog(null,
+						"Searched year is in future!", "WARNING!!",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			if (searchParameters.isEmpty()){
+				JOptionPane.showMessageDialog(null,
+						"No Search parameters specified!", "WARNING!!",
+						JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			System.out.println(searchParameters.toString());
+			authorDetails = queryEngine.queryInfo(searchParameters);
+			tabbedPaneSearch.setSelectedIndex(2);
+			listModel.removeAllElements();
+			authorNames = new ArrayList<String>();
+	        for(Author author: authorDetails){
+	        	listModel.addElement(author.getName());
+	        }
+	        //btnJournalSearchButton.setEnabled(true);
+		}
 	}
 	
 	// Generate Journal Search Parameters

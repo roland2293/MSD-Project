@@ -8,24 +8,11 @@
 
 package Team15.DBLP.QueryEngine;
 
-import java.net.ConnectException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.crypto.CipherInputStream;
-
 import Team15.DBLP.db.DBConnection;
 import Team15.DBLP.ui.Author;
+
+import java.sql.*;
+import java.util.*;
 
 public class QueryEngine {
 	HashMap<String,ArrayList<Integer>> confCount;
@@ -299,8 +286,8 @@ public class QueryEngine {
 			}
 						
 			String region = authInfo.containsKey(authorName)?authInfo.get(authorName).get(0):" ";
-			String homepage = authInfo.containsKey(authorName)?authInfo.get(authorName).get(0):" ";
-			String area = authInfo.containsKey(authorName)?authInfo.get(authorName).get(0):" ";
+			String homepage = authInfo.containsKey(authorName)?authInfo.get(authorName).get(1):" ";
+			String area = authInfo.containsKey(authorName)?authInfo.get(authorName).get(2):" ";
 			
 			Author author = new Author();
 			author.setName(authorName);

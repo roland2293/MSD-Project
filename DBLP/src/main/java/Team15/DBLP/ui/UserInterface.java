@@ -457,18 +457,48 @@ public class UserInterface extends JFrame {
 			//btnConferenceSearchButton.setEnabled(false);
 			SearchParameters searchParameters = generateConferenceSearchParameters();
             int year = Calendar.getInstance().get(Calendar.YEAR);
-			if (searchParameters.getYearOfPublication() > year){
-				JOptionPane.showMessageDialog(null,
-						"Searched year is in future!", "WARNING!!",
-						JOptionPane.WARNING_MESSAGE);
-				return;
-			}
 			if (searchParameters.isEmpty()){
 				JOptionPane.showMessageDialog(null,
 						"No Search parameters specified!", "WARNING!!",
 						JOptionPane.WARNING_MESSAGE);
 				return;
 			}
+			
+			if(searchParameters.getYearOfPublication()!=0){
+	            if (searchParameters.getYearOfPublication() < 1900){
+					JOptionPane.showMessageDialog(null,
+							"Searched year is out of scope!", "WARNING!!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if (searchParameters.getYearOfPublication() > year){
+					JOptionPane.showMessageDialog(null,
+							"Searched year is in future!", "WARNING!!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+			}
+
+			if(searchParameters.getConferenceNames()!=null){
+				if(searchParameters.getConferenceNames().contains("%") ||
+						   searchParameters.getConferenceNames().contains("_")	){
+							JOptionPane.showMessageDialog(null,
+									"Conference name cannot contain _ or %", "WARNING!!",
+									JOptionPane.WARNING_MESSAGE);
+							return;
+						}
+			}
+
+			if(searchParameters.getKeywords()!=null){
+				if(searchParameters.getKeywords().contains("%") ||
+						   searchParameters.getKeywords().contains("_")	){
+							JOptionPane.showMessageDialog(null,
+									"Conference keywords cannot contain _ or %", "WARNING!!",
+									JOptionPane.WARNING_MESSAGE);
+							return;
+						}
+			}
+
 			System.out.println(searchParameters.toString());
 			
 		
@@ -536,18 +566,6 @@ public class UserInterface extends JFrame {
 			//btnJournalSearchButton.setEnabled(false);
 			SearchParameters searchParameters = generateJournalSearchParameters();
             int year = Calendar.getInstance().get(Calendar.YEAR);
-            if (searchParameters.getYearOfPublication() < 1900){
-				JOptionPane.showMessageDialog(null,
-						"Searched year is out of scope!", "WARNING!!",
-						JOptionPane.WARNING_MESSAGE);
-				return;
-			}
-			if (searchParameters.getYearOfPublication() > year){
-				JOptionPane.showMessageDialog(null,
-						"Searched year is in future!", "WARNING!!",
-						JOptionPane.WARNING_MESSAGE);
-				return;
-			}
 			if (searchParameters.isEmpty()){
 				if(searchParameters.getVolume()!=null){
 					JOptionPane.showMessageDialog(null,
@@ -555,11 +573,47 @@ public class UserInterface extends JFrame {
 							JOptionPane.WARNING_MESSAGE);
 					return;
 				}
-				JOptionPane.showMessageDialog(null,
-						"No Search parameters specified!", "WARNING!!",
-						JOptionPane.WARNING_MESSAGE);
-				return;
+				else{
+					JOptionPane.showMessageDialog(null,
+							"No Search parameters specified!", "WARNING!!",
+							JOptionPane.WARNING_MESSAGE);
+					return;
+				}
 			}
+			
+            if(searchParameters.getYearOfPublication()!=0){
+                if (searchParameters.getYearOfPublication() < 1900){
+    				JOptionPane.showMessageDialog(null,
+    						"Searched year is out of scope!", "WARNING!!",
+    						JOptionPane.WARNING_MESSAGE);
+    				return;
+    			}
+    			if (searchParameters.getYearOfPublication() > year){
+    				JOptionPane.showMessageDialog(null,
+    						"Searched year is in future!", "WARNING!!",
+    						JOptionPane.WARNING_MESSAGE);
+    				return;
+    			}
+            }
+            if(searchParameters.getJournalNames()!=null){
+    			if(searchParameters.getJournalNames().contains("%") ||
+    					   searchParameters.getJournalNames().contains("_")	){
+    						JOptionPane.showMessageDialog(null,
+    								"Journal name cannot contain _ or %", "WARNING!!",
+    								JOptionPane.WARNING_MESSAGE);
+    						return;
+    					}
+            }
+            if(searchParameters.getKeywords()!=null){
+    			if(searchParameters.getKeywords().contains("%") ||
+    					   searchParameters.getKeywords().contains("_")	){
+    						JOptionPane.showMessageDialog(null,
+    								"Journal keywords cannot contain _ or %", "WARNING!!",
+    								JOptionPane.WARNING_MESSAGE);
+    						return;
+    					}
+            }
+
 			System.out.println(searchParameters.toString());
 			authorDetails = queryEngine.queryInfo(searchParameters);
 			tabbedPaneSearch.setSelectedIndex(2);

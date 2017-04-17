@@ -221,11 +221,11 @@ public class UserInterface extends JFrame {
 		panelConference.setLayout(null);
 		
 		JLabel lblAuthorName = new JLabel("Conference Name");
-		lblAuthorName.setBounds(61, 51, 111, 21);
+		lblAuthorName.setBounds(35, 51, 111, 21);
 		panelConference.add(lblAuthorName);
 
 		JLabel lblConferenceSearcg = new JLabel("Conference Search");
-		lblConferenceSearcg.setBounds(135, 6, 149, 16);
+		lblConferenceSearcg.setBounds(199, 6, 149, 16);
 		panelConference.add(lblConferenceSearcg);
 
 		yearTextField = new JTextField();
@@ -246,7 +246,7 @@ public class UserInterface extends JFrame {
 
 		JButton btnConferenceSearchButton = new JButton("Search");
 		btnConferenceSearchButton.addActionListener(new ConferenceSearchActionListner());
-		btnConferenceSearchButton.setBounds(135, 395, 117, 29);
+		btnConferenceSearchButton.setBounds(205, 391, 117, 29);
 		panelConference.add(btnConferenceSearchButton);
 		
 		JLabel lblYear = new JLabel("Year");
@@ -258,23 +258,23 @@ public class UserInterface extends JFrame {
 		panelConference.add(lblKeyword);
 
 		chckbxServedAsGeneral = new JCheckBox("General Chair");
-		chckbxServedAsGeneral.setBounds(130, 212, 192, 23);
+		chckbxServedAsGeneral.setBounds(173, 222, 192, 23);
 		panelConference.add(chckbxServedAsGeneral);
 
 		JLabel lblSelectIfThe = new JLabel("Has the author served as the following?");
-		lblSelectIfThe.setBounds(105, 161, 280, 33);
+		lblSelectIfThe.setBounds(122, 177, 280, 33);
 		panelConference.add(lblSelectIfThe);
 
 		chckbxProgramChair = new JCheckBox("Program Chair");
-		chckbxProgramChair.setBounds(130, 249, 192, 23);
+		chckbxProgramChair.setBounds(173, 257, 192, 23);
 		panelConference.add(chckbxProgramChair);
 
 		chckbxConferenceChair = new JCheckBox("Conference Chair");
-		chckbxConferenceChair.setBounds(130, 292, 192, 23);
+		chckbxConferenceChair.setBounds(173, 292, 192, 23);
 		panelConference.add(chckbxConferenceChair);
 
 		chckbxCommitteMember = new JCheckBox("Committee Member");
-		chckbxCommitteMember.setBounds(130, 334, 192, 23);
+		chckbxCommitteMember.setBounds(173, 327, 192, 23);
 		panelConference.add(chckbxCommitteMember);
 		
 		// Panel for Journal Search
@@ -293,7 +293,7 @@ public class UserInterface extends JFrame {
 		JLabel lblJournalSearch = new JLabel("Journal Search");
 		lblJournalSearch.setHorizontalTextPosition(SwingConstants.CENTER);
 		lblJournalSearch.setHorizontalAlignment(SwingConstants.CENTER);
-		lblJournalSearch.setBounds(153, 33, 115, 20);
+		lblJournalSearch.setBounds(191, 34, 115, 20);
 		panelJournal.add(lblJournalSearch);
 
 		jyearTextField = new JTextField();
@@ -314,7 +314,7 @@ public class UserInterface extends JFrame {
 
 		btnJournalSearchButton = new JButton("Search");
 		btnJournalSearchButton.addActionListener(new JournalSearchActionListner());
-		btnJournalSearchButton.setBounds(203, 417, 65, 23);
+		btnJournalSearchButton.setBounds(191, 395, 115, 29);
 		panelJournal.add(btnJournalSearchButton);
 		
 		JLabel lblJournalYear = new JLabel("Year");
@@ -345,12 +345,12 @@ public class UserInterface extends JFrame {
 
 		chckbxAssociateEditor = new JCheckBox("Associate Editor");
 		chckbxAssociateEditor.setEnabled(false);
-		chckbxAssociateEditor.setBounds(153, 317, 192, 23);
+		chckbxAssociateEditor.setBounds(162, 314, 192, 23);
 		panelJournal.add(chckbxAssociateEditor);
 
 		chckbxEditorinChief = new JCheckBox("Editor in Chief");
 		chckbxEditorinChief.setEnabled(false);
-		chckbxEditorinChief.setBounds(153, 358, 192, 23);
+		chckbxEditorinChief.setBounds(162, 349, 192, 23);
 		panelJournal.add(chckbxEditorinChief);
 		
 		// Panel for Search Results
@@ -423,7 +423,7 @@ public class UserInterface extends JFrame {
 		
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new BackToSearchActionListner());
-		btnBack.setBounds(174, 433, 151, 33);
+		btnBack.setBounds(184, 433, 119, 29);
 		panelResult.add(btnBack);
 		
 		JLabel lblNewLabel = new JLabel("Author Results");

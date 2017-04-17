@@ -1,11 +1,12 @@
 package Team15.DBLP.xml;
 
 /**
+ * A Committee consists of Author, Role, Conference, and Year
+ * 
  * @author paurav
  *
  */
- 
- // A Committee consists of Author, Role, Conference, and Year
+
 public class Committee {
 	private String conference;
 	private String year;

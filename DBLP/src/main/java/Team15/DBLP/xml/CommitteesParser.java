@@ -12,10 +12,13 @@ import java.util.ArrayList;
 import Team15.DBLP.db.DBConnection;
 
 /**
+ * CommitteesParser is used to get the Committee from a file and store it in the
+ * database.
+ * 
  * @author paurav
  *
  */
- // CommitteesParser is used to get the Committee from a file and store it in the database.
+
 public class CommitteesParser {
 	private File folder;
 	private Connection conn;
@@ -32,6 +35,13 @@ public class CommitteesParser {
 
 	BufferedReader reader;
 
+	/**
+	 * Parse the committee data from the given folder
+	 * 
+	 * @param isTest
+	 * @throws SQLException
+	 * @throws IOException
+	 */
 	public void parser(Boolean isTest) throws SQLException, IOException {
 		conn = DBConnection.getConn();
 		insertCommitteeMembers = conn.prepareStatement(
@@ -41,6 +51,15 @@ public class CommitteesParser {
 		}
 	}
 
+	/**
+	 * Given a file path parse the data from the file. File name also determines
+	 * the committee name and year.
+	 * 
+	 * @param file
+	 * @param isTest
+	 * @throws IOException
+	 * @throws SQLException
+	 */
 	public void parseFile(File file, Boolean isTest) throws IOException,
 			SQLException {
 		committees = new ArrayList<Committee>();
@@ -64,6 +83,13 @@ public class CommitteesParser {
 		reader.close();
 	}
 
+	/**
+	 * parse the line from the file
+	 * 
+	 * @param line
+	 * @param committee
+	 * @return
+	 */
 	public Committee parseLine(String line, Committee committee) {
 		committee = new Committee(committee.getConference(), committee
 				.getYear());

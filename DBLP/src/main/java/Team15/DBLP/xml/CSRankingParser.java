@@ -11,6 +11,12 @@ import java.util.HashMap;
 import Team15.DBLP.db.DBConnection;
 import Team15.DBLP.ui.Author;
 
+/**
+ * Parsing CSRanking data
+ * 
+ * @author paurav
+ *
+ */
 public class CSRankingParser {
 
 	private Connection conn;
@@ -33,6 +39,13 @@ public class CSRankingParser {
 		return authorDetails;
 	}
 
+	/**
+	 * Parse the csv files for collecting data
+	 * 
+	 * @param isTest
+	 * @throws SQLException
+	 * @throws IOException
+	 */
 	public void parser(Boolean isTest) throws SQLException, IOException {
 		conn = DBConnection.getConn();
 		insertAuthorDetails = conn.prepareStatement(
@@ -43,6 +56,12 @@ public class CSRankingParser {
 		insertIntoDB(isTest);
 	}
 
+	/**
+	 * Add the author details object to the database.
+	 * 
+	 * @param isTest
+	 * @throws SQLException
+	 */
 	private void insertIntoDB(Boolean isTest) throws SQLException {
 		Author author;
 		for (String key : authorDetails.keySet()) {
@@ -57,6 +76,12 @@ public class CSRankingParser {
 			insertAuthorDetails.executeBatch();
 	}
 
+	/**
+	 * Read the homepages info from the csv file
+	 * 
+	 * @param filePath
+	 * @throws IOException
+	 */
 	private void parseHomepages(String filePath) throws IOException {
 		reader = new BufferedReader(new FileReader(filePath));
 		String line = "";
@@ -80,6 +105,12 @@ public class CSRankingParser {
 		reader.close();
 	}
 
+	/**
+	 * Generate the map for the author info from the csv file
+	 * 
+	 * @param filePath
+	 * @throws IOException
+	 */
 	private void parseAuthorInfo(String filePath) throws IOException {
 		reader = new BufferedReader(new FileReader(filePath));
 		String line = "";
@@ -108,6 +139,12 @@ public class CSRankingParser {
 		reader.close();
 	}
 
+	/**
+	 * Generate the Institution mapping for all the authors available
+	 * 
+	 * @param filePath
+	 * @throws IOException
+	 */
 	private void parseInstitutionRegion(String filePath) throws IOException {
 		reader = new BufferedReader(new FileReader(filePath));
 		String line = "";

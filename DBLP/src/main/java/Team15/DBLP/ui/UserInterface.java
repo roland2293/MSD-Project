@@ -211,6 +211,18 @@ public class UserInterface extends JFrame {
 		label.setBounds(6, 16, 474, 84);
 		panel_tips.add(label);
 		
+		JPanel panel_notes = new JPanel();
+		panel_notes.setBorder(new TitledBorder(null, "Notes", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_notes.setBounds(10, 338, 490, 124);
+		panelHome.add(panel_notes);
+		panel_notes.setLayout(null);
+		
+		String line3 = "1. Not all authors have a Homepage or Region or University.<br>";
+		
+		JLabel label_1 = new JLabel("<html>"+line3+"</html>");
+		label_1.setBounds(10, 22, 465, 91);
+		panel_notes.add(label_1);
+		
 		// Search Tabbed Pane
 		tabbedPaneSearch = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.addTab("Search", null, tabbedPaneSearch, null);

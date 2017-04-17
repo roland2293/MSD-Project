@@ -13,7 +13,7 @@ import Team15.DBLP.QueryEngine.SearchParameters;
 
 public class JournalSearchTest {
 
-	static UserInterface ui;
+	static UserInterface ui = new UserInterface();;
 	JTextField yearTextField;
 	JTextField keywordTextField;
 	JTextField journalTextfield;
@@ -23,7 +23,6 @@ public class JournalSearchTest {
 
 	@Before
 	public void setUp() {
-		ui = new UserInterface();
 		yearTextField = ui.getYearTextField();
 		keywordTextField = ui.getKeywordTextField();
 		journalTextfield = ui.getJournalTextfield();

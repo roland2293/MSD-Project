@@ -212,7 +212,7 @@ public class ConferenceSearch extends JFrame implements ActionListener {
 			}
 			System.out.println(searchParameters.toString());
 			QueryEngine queryEngine = new QueryEngine();
-			List<String> authorNames = queryEngine.query(searchParameters);
+			List<Author> authorNames = queryEngine.queryInfo(searchParameters);
 			AuthorResult authorFrame = new AuthorResult(authorNames,
 					"conference", searchParameters);
 			frame.setVisible(false);

@@ -215,7 +215,7 @@ public class JournalSearch extends JFrame implements ActionListener {
 			}
 			System.out.println(searchParameters.toString());
 			QueryEngine queryEngine = new QueryEngine();
-			List<String> authorNames = queryEngine.query(searchParameters);
+			List<Author> authorNames = queryEngine.queryInfo(searchParameters);
 			AuthorResult authorFrame = new AuthorResult(authorNames, "journal", searchParameters);
 			frame.setVisible(false);
 			authorFrame.setVisible(true);

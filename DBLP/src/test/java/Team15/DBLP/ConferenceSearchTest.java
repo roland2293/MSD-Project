@@ -13,7 +13,7 @@ import Team15.DBLP.QueryEngine.SearchParameters;
 
 public class ConferenceSearchTest {
 
-	static UserInterface ui;
+	static UserInterface ui = new UserInterface();
 	JTextField yearTextField;
 	JTextField keywordTextField;
 	JTextField conferenceTextField;
@@ -24,7 +24,6 @@ public class ConferenceSearchTest {
 
 	@Before
 	public void startUp() {
-		ui = new UserInterface();
 		yearTextField = ui.getYearTextField();
 		keywordTextField = ui.getKeywordTextField();
 		conferenceTextField = ui.getConferenceTextField();

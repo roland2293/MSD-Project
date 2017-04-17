@@ -98,7 +98,6 @@ public class UserInterface extends JFrame {
 	private JTextField volumeField;
 	private JCheckBox  chckbxAssociateEditor;
 	private JCheckBox  chckbxEditorinChief;
-	private JButton    btnJournalSearchButton;
 	
 	public JTextField getJournalYearTextField() {
 		return jyearTextField;
@@ -221,7 +220,7 @@ public class UserInterface extends JFrame {
 		panelConference.setLayout(null);
 		
 		JLabel lblAuthorName = new JLabel("Conference Name");
-		lblAuthorName.setBounds(61, 51, 111, 21);
+		lblAuthorName.setBounds(37, 51, 111, 21);
 		panelConference.add(lblAuthorName);
 
 		JLabel lblConferenceSearcg = new JLabel("Conference Search");
@@ -246,7 +245,7 @@ public class UserInterface extends JFrame {
 
 		JButton btnConferenceSearchButton = new JButton("Search");
 		btnConferenceSearchButton.addActionListener(new ConferenceSearchActionListner());
-		btnConferenceSearchButton.setBounds(135, 395, 117, 29);
+		btnConferenceSearchButton.setBounds(205, 391, 117, 29);
 		panelConference.add(btnConferenceSearchButton);
 		
 		JLabel lblYear = new JLabel("Year");
@@ -258,23 +257,23 @@ public class UserInterface extends JFrame {
 		panelConference.add(lblKeyword);
 
 		chckbxServedAsGeneral = new JCheckBox("General Chair");
-		chckbxServedAsGeneral.setBounds(130, 212, 192, 23);
+		chckbxServedAsGeneral.setBounds(173, 222, 192, 23);
 		panelConference.add(chckbxServedAsGeneral);
 
 		JLabel lblSelectIfThe = new JLabel("Has the author served as the following?");
-		lblSelectIfThe.setBounds(105, 161, 280, 33);
+		lblSelectIfThe.setBounds(122, 177, 280, 33);
 		panelConference.add(lblSelectIfThe);
 
 		chckbxProgramChair = new JCheckBox("Program Chair");
-		chckbxProgramChair.setBounds(130, 249, 192, 23);
+		chckbxProgramChair.setBounds(173, 257, 192, 23);
 		panelConference.add(chckbxProgramChair);
 
 		chckbxConferenceChair = new JCheckBox("Conference Chair");
-		chckbxConferenceChair.setBounds(130, 292, 192, 23);
+		chckbxConferenceChair.setBounds(173, 292, 192, 23);
 		panelConference.add(chckbxConferenceChair);
 
 		chckbxCommitteMember = new JCheckBox("Committee Member");
-		chckbxCommitteMember.setBounds(130, 334, 192, 23);
+		chckbxCommitteMember.setBounds(173, 327, 192, 23);
 		panelConference.add(chckbxCommitteMember);
 		
 		// Panel for Journal Search
@@ -311,11 +310,6 @@ public class UserInterface extends JFrame {
 		journalTextfield.setColumns(10);
 		journalTextfield.setBounds(162, 94, 192, 27);
 		panelJournal.add(journalTextfield);
-
-		btnJournalSearchButton = new JButton("Search");
-		btnJournalSearchButton.addActionListener(new JournalSearchActionListner());
-		btnJournalSearchButton.setBounds(203, 417, 65, 23);
-		panelJournal.add(btnJournalSearchButton);
 		
 		JLabel lblJournalYear = new JLabel("Year");
 		lblJournalYear.setHorizontalTextPosition(SwingConstants.RIGHT);
@@ -352,6 +346,10 @@ public class UserInterface extends JFrame {
 		chckbxEditorinChief.setEnabled(false);
 		chckbxEditorinChief.setBounds(153, 358, 192, 23);
 		panelJournal.add(chckbxEditorinChief);
+		
+		JButton button = new JButton("Search");
+		button.setBounds(174, 404, 117, 29);
+		panelJournal.add(button);
 		
 		// Panel for Search Results
 		panelResult = new JPanel();
@@ -530,37 +528,6 @@ public class UserInterface extends JFrame {
 			searchParameters.setYearOfPublication(Integer.parseInt(year));
 		
 		return searchParameters;
-	}
-	
-	// Implements Search Button in Journal Search
-	class JournalSearchActionListner implements ActionListener {
-
-		public void actionPerformed(ActionEvent e) {
-			//btnJournalSearchButton.setEnabled(false);
-			SearchParameters searchParameters = generateJournalSearchParameters();
-            int year = Calendar.getInstance().get(Calendar.YEAR);
-			if (searchParameters.getYearOfPublication() > year){
-				JOptionPane.showMessageDialog(null,
-						"Searched year is in future!", "WARNING!!",
-						JOptionPane.WARNING_MESSAGE);
-				return;
-			}
-			if (searchParameters.isEmpty()){
-				JOptionPane.showMessageDialog(null,
-						"No Search parameters specified!", "WARNING!!",
-						JOptionPane.WARNING_MESSAGE);
-				return;
-			}
-			System.out.println(searchParameters.toString());
-			authorDetails = queryEngine.queryInfo(searchParameters);
-			tabbedPaneSearch.setSelectedIndex(2);
-			listModel.removeAllElements();
-			authorNames = new ArrayList<String>();
-	        for(Author author: authorDetails){
-	        	listModel.addElement(author.getName());
-	        }
-	        //btnJournalSearchButton.setEnabled(true);
-		}
 	}
 	
 	// Generate Journal Search Parameters

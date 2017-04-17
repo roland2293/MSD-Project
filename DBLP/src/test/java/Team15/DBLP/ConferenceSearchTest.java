@@ -8,12 +8,12 @@ import javax.swing.JTextField;
 import org.junit.Before;
 import org.junit.Test;
 
-import Team15.DBLP.ui.ConferenceSearch;
+import Team15.DBLP.ui.UserInterface;
 import Team15.DBLP.QueryEngine.SearchParameters;
 
 public class ConferenceSearchTest {
 
-	static ConferenceSearch conferenceSearch;
+	static UserInterface ui;
 	JTextField yearTextField;
 	JTextField keywordTextField;
 	JTextField conferenceTextField;
@@ -24,14 +24,14 @@ public class ConferenceSearchTest {
 
 	@Before
 	public void startUp() {
-		conferenceSearch = new ConferenceSearch();
-		yearTextField = conferenceSearch.getYearTextField();
-		keywordTextField = conferenceSearch.getKeywordTextField();
-		conferenceTextField = conferenceSearch.getConferenceTextField();
-		chckbxServedAsGeneral = conferenceSearch.getChckbxServedAsGeneral();
-		chckbxProgramChair = conferenceSearch.getChckbxProgramChair();
-		chckbxConferenceChair = conferenceSearch.getChckbxConferenceChair();
-		chckbxCommitteMember = conferenceSearch.getChckbxCommitteMember();
+		ui = new UserInterface();
+		yearTextField = ui.getYearTextField();
+		keywordTextField = ui.getKeywordTextField();
+		conferenceTextField = ui.getConferenceTextField();
+		chckbxServedAsGeneral = ui.getChckbxServedAsGeneral();
+		chckbxProgramChair = ui.getChckbxProgramChair();
+		chckbxConferenceChair = ui.getChckbxConferenceChair();
+		chckbxCommitteMember = ui.getChckbxCommitteMember();
 	}
 
 	@Test
@@ -55,8 +55,8 @@ public class ConferenceSearchTest {
 		chckbxConferenceChair.setSelected(true);
 		chckbxCommitteMember.setSelected(true);
 
-		SearchParameters searchParameters = conferenceSearch
-				.generateSearchParameters();
+		SearchParameters searchParameters = ui
+				.generateConferenceSearchParameters();
 
 		assertEquals("conference", searchParameters.getSearchType());
 		assertEquals(2006, searchParameters.getYearOfPublication());

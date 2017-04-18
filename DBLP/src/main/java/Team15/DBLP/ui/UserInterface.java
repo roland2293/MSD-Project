@@ -357,12 +357,10 @@ public class UserInterface extends JFrame {
 		panelJournal.add(lblJournalSelectIfThe);
 
 		chckbxAssociateEditor = new JCheckBox("Associate Editor");
-		chckbxAssociateEditor.setEnabled(true);
 		chckbxAssociateEditor.setBounds(162, 314, 192, 23);
 		panelJournal.add(chckbxAssociateEditor);
 
 		chckbxEditorinChief = new JCheckBox("Editor in Chief");
-		chckbxEditorinChief.setEnabled(true);
 		chckbxEditorinChief.setBounds(162, 349, 192, 23);
 		panelJournal.add(chckbxEditorinChief);
 		
@@ -476,7 +474,7 @@ public class UserInterface extends JFrame {
 				return;
 			}
 			
-			if(searchParameters.getYearOfPublication()!=0){
+			if(searchParameters.getYearOfPublication() >= 0){
 	            if (searchParameters.getYearOfPublication() < 1900){
 					JOptionPane.showMessageDialog(null,
 							"Searched year is out of scope!", "WARNING!!",
@@ -593,7 +591,7 @@ public class UserInterface extends JFrame {
 				}
 			}
 			
-            if(searchParameters.getYearOfPublication()!=0){
+            if(searchParameters.getYearOfPublication()>=0){
                 if (searchParameters.getYearOfPublication() < 1900){
     				JOptionPane.showMessageDialog(null,
     						"Searched year is out of scope!", "WARNING!!",

@@ -23,8 +23,8 @@ public class JournalSearchTest {
 
 	@Before
 	public void setUp() {
-		yearTextField = ui.getYearTextField();
-		keywordTextField = ui.getKeywordTextField();
+		yearTextField = ui.getJournalYearTextField();
+		keywordTextField = ui.getJournalKeywordTextField();
 		journalTextfield = ui.getJournalTextfield();
 		volumeField = ui.getVolumeField();
 		chckbxAssociateEditor = ui.getChckbxAssociateEditor();
@@ -48,7 +48,9 @@ public class JournalSearchTest {
 				"natural language processing, visualization techniques");
 		journalTextfield.setText("Journal of Biomedical Informatics, jbi");
 		volumeField.setText("30");
-
+		chckbxAssociateEditor.setSelected(true);
+		chckbxEditorinChief.setSelected(false);
+		
 		SearchParameters searchParameters = ui
 				.generateJournalSearchParameters();
 
@@ -58,8 +60,8 @@ public class JournalSearchTest {
 				searchParameters.getKeywords().toString());
 		assertEquals("[Journal of Biomedical Informatics, jbi]",
 				searchParameters.getJournalNames().toString());
-		assertEquals(false, chckbxAssociateEditor.isEnabled());
-		assertEquals(false, chckbxEditorinChief.isEnabled());
+		assertEquals(true, chckbxAssociateEditor.isSelected());
+		assertEquals(false, chckbxEditorinChief.isSelected());
 	}
 
 }
